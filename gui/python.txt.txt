@@ -1,1 +1,1 @@
-hello world
+this is the python gui
