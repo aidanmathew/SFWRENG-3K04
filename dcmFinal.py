@@ -8,7 +8,7 @@ import os
 class guiDCM:
     # defining the directory for the image logo and respective directory
     imageFilepath = "./images"
-    mainImage = "./heartbeat.png"
+    mainImage = "/heartbeat.png"
 
     # creating folder which will contain json file with all users
     userFilepath = "./user"
@@ -402,6 +402,10 @@ class guiDCM:
     # this function will put the data into the database JSON
     def writePatientData(self, username):
         
+        if (self.strValue1.get() > self.strValue2.get()):
+            messagebox.showerror("Input Error","The Lower Rate Limit cannot be larger than the Upper Rate Limit")
+            #print out an error and end the saving process
+
         self.patientData = {}
 
         self.patientDataFile = "/"+username+".json"
