@@ -176,7 +176,7 @@ class guiDCM:
             self.usernameTextEntry = ttk.Entry(self.frameLoginArea, font = loginFont)
             self.passwordTextEntry = ttk.Entry(self.frameLoginArea, font = loginFont, show = "*")
 
-            self.userLoginButton = Button(self.frameLoginArea, text = "Sign in.", command=lambda:self.loginUser())
+            self.userLoginButton = Button(self.frameLoginArea, text = "Sign in", command=lambda:self.loginUser())
             self.userRememberButton = ttk.Checkbutton(self.frameLoginArea, text = "Remember Me", variable = valCheck)
             self.createNewUserButton = ttk.Button(self.frameLoginArea, text = "Create New User", command = lambda:self.createNewUserScreen())
             
@@ -399,12 +399,24 @@ class guiDCM:
             self.strValue7.set("")
             self.strValue8.set("")
 
+    #def pramChecker(self,username):
+    #    if ()
+
     # this function will put the data into the database JSON
     def writePatientData(self, username):
         
-        if (self.strValue1.get() > self.strValue2.get()):
+        if (int(self.strValue1.get()) < 30 or int(self.strValue1.get()) > 175):
+            messagebox.showerror("Input Error","The Lower Rate Limit has to be between 30ppm and 175ppm")
+            self.strValue1.set("")
+
+        if (int(self.strValue2.get()) < 50 or int(self.strValue2.get()) > 175):
+            messagebox.showerror("Input Error","The Upper Rate Limit has to be between 50ppm and 175ppm")
+            self.strValue2.set("")
+
+        if (int(self.strValue1.get()) > int(self.strValue2.get())):
             messagebox.showerror("Input Error","The Lower Rate Limit cannot be larger than the Upper Rate Limit")
-            #print out an error and end the saving process
+            self.strValue1.set("")
+            self.strValue2.set("")
 
         self.patientData = {}
 
