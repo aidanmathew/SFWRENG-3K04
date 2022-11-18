@@ -399,8 +399,6 @@ class guiDCM:
             self.strValue7.set("")
             self.strValue8.set("")
 
-    #def pramChecker(self,username):
-    #    if ()
 
     # this function will put the data into the database JSON
     def writePatientData(self, username):
