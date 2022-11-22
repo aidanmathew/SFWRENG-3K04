@@ -309,28 +309,28 @@ class guiDCM:
             self.data4 = Label(self.paitentDataEntry, text = "Atrial Pules Width")
             self.data5 = Label(self.paitentDataEntry, text = "Ventrical Amplitude")
             self.data6 = Label(self.paitentDataEntry, text = "Ventrical Pules Width")
-            self.data7 = Label(self.paitentDataEntry, text = "VRP")
+            self.data7 = Label(self.paitentDataEntry, text = "vrp")
             self.data8 = Label(self.paitentDataEntry, text = "ARP")
 
             # these string variables are initiated so that the user input can be stored
-            self.strValue1 = StringVar()
-            self.strValue2 = StringVar()
-            self.strValue3 = StringVar()
-            self.strValue4 = StringVar()
-            self.strValue5 = StringVar()
-            self.strValue6 = StringVar()
-            self.strValue7 = StringVar()
-            self.strValue8 = StringVar()
+            self.lowRateLim = StringVar()
+            self.upperRateLim = StringVar()
+            self.atrialAmp = StringVar()
+            self.atrialPulesWidth = StringVar()
+            self.ventricalAmp = StringVar()
+            self.ventricalPulesWidth = StringVar()
+            self.vrp = StringVar()
+            self.arp = StringVar()
 
             # this will use TKinter in order to store the user entry into the previous string variables
-            self.val1 = ttk.Entry(self.paitentDataEntry, textvariable = self.strValue1)
-            self.val2 = ttk.Entry(self.paitentDataEntry, textvariable = self.strValue2)
-            self.val3 = ttk.Entry(self.paitentDataEntry, textvariable = self.strValue3)
-            self.val4 = ttk.Entry(self.paitentDataEntry, textvariable = self.strValue4)
-            self.val5 = ttk.Entry(self.paitentDataEntry, textvariable = self.strValue5)
-            self.val6 = ttk.Entry(self.paitentDataEntry, textvariable = self.strValue6)
-            self.val7 = ttk.Entry(self.paitentDataEntry, textvariable = self.strValue7)
-            self.val8 = ttk.Entry(self.paitentDataEntry, textvariable = self.strValue8)
+            self.val1 = ttk.Entry(self.paitentDataEntry, textvariable = self.lowRateLim)
+            self.val2 = ttk.Entry(self.paitentDataEntry, textvariable = self.upperRateLim)
+            self.val3 = ttk.Entry(self.paitentDataEntry, textvariable = self.atrialAmp)
+            self.val4 = ttk.Entry(self.paitentDataEntry, textvariable = self.atrialPulesWidth)
+            self.val5 = ttk.Entry(self.paitentDataEntry, textvariable = self.ventricalAmp)
+            self.val6 = ttk.Entry(self.paitentDataEntry, textvariable = self.ventricalPulesWidth)
+            self.val7 = ttk.Entry(self.paitentDataEntry, textvariable = self.vrp)
+            self.val8 = ttk.Entry(self.paitentDataEntry, textvariable = self.arp)
             
             # using TKinter UI in order to align the information into a grid layout
             self.data1.grid(row = 1, column = 0, padx = 5, pady = 5)
@@ -378,57 +378,57 @@ class guiDCM:
                 self.patientData = json.load(iFile)
 
                 self.programModeCombobox.set(self.patientData["pacingMode"])
-                self.strValue1.set(self.patientData["value1"])
-                self.strValue2.set(self.patientData["value2"])
-                self.strValue3.set(self.patientData["value3"])
-                self.strValue4.set(self.patientData["value4"])
-                self.strValue5.set(self.patientData["value5"])
-                self.strValue6.set(self.patientData["value6"])
-                self.strValue7.set(self.patientData["value7"])
-                self.strValue8.set(self.patientData["value8"])
+                self.lowRateLim.set(self.patientData["value1"])
+                self.upperRateLim.set(self.patientData["value2"])
+                self.atrialAmp.set(self.patientData["value3"])
+                self.atrialPulesWidth.set(self.patientData["value4"])
+                self.ventricalAmp.set(self.patientData["value5"])
+                self.ventricalPulesWidth.set(self.patientData["value6"])
+                self.vrp.set(self.patientData["value7"])
+                self.arp.set(self.patientData["value8"])
 
         # if unsuccessful, then the values will be set to an empty string
         except:
             self.programModeCombobox.set("")
-            self.strValue1.set("")
-            self.strValue2.set("")
-            self.strValue3.set("")
-            self.strValue4.set("")
-            self.strValue5.set("")
-            self.strValue6.set("")
-            self.strValue7.set("")
-            self.strValue8.set("")
+            self.lowRateLim.set("")
+            self.upperRateLim.set("")
+            self.atrialAmp.set("")
+            self.atrialPulesWidth.set("")
+            self.ventricalAmp.set("")
+            self.ventricalPulesWidth.set("")
+            self.vrp.set("")
+            self.arp.set("")
 
 
     # this function will put the data into the database JSON
     def writePatientData(self, username):
         
-        if (int(self.strValue1.get()) < 30 or int(self.strValue1.get()) > 175):
+        if (int(self.lowRateLim.get()) < 30 or int(self.lowRateLim.get()) > 175):
             messagebox.showerror("Input Error","The Lower Rate Limit has to be between 30ppm and 175ppm")
-            self.strValue1.set("")
+            self.lowRateLim.set("")
 
-        if (int(self.strValue2.get()) < 50 or int(self.strValue2.get()) > 175):
+        if (int(self.upperRateLim.get()) < 50 or int(self.upperRateLim.get()) > 175):
             messagebox.showerror("Input Error","The Upper Rate Limit has to be between 50ppm and 175ppm")
-            self.strValue2.set("")
+            self.upperRateLim.set("")
 
-        if (int(self.strValue1.get()) > int(self.strValue2.get())):
+        if (int(self.lowRateLim.get()) > int(self.upperRateLim.get())):
             messagebox.showerror("Input Error","The Lower Rate Limit cannot be larger than the Upper Rate Limit")
-            self.strValue1.set("")
-            self.strValue2.set("")
+            self.lowRateLim.set("")
+            self.upperRateLim.set("")
 
         self.patientData = {}
 
         self.patientDataFile = "/"+username+".json"
         with open(self.userFilepath + self.patientDataFile, "w") as oFile:
             self.patientData["pacingMode"] = self.programModeCombobox.get()
-            self.patientData["value1"] = self.strValue1.get()
-            self.patientData["value2"] = self.strValue2.get()
-            self.patientData["value3"] = self.strValue3.get()
-            self.patientData["value4"] = self.strValue4.get()
-            self.patientData["value5"] = self.strValue5.get()
-            self.patientData["value6"] = self.strValue6.get()
-            self.patientData["value7"] = self.strValue7.get()
-            self.patientData["value8"] = self.strValue8.get()
+            self.patientData["value1"] = self.lowRateLim.get()
+            self.patientData["value2"] = self.upperRateLim.get()
+            self.patientData["value3"] = self.atrialAmp.get()
+            self.patientData["value4"] = self.atrialPulesWidth.get()
+            self.patientData["value5"] = self.ventricalAmp.get()
+            self.patientData["value6"] = self.ventricalPulesWidth.get()
+            self.patientData["value7"] = self.vrp.get()
+            self.patientData["value8"] = self.arp.get()
             # send the data to the file, AKA dump = writing data
             json.dump(self.patientData, oFile)
     
