@@ -309,7 +309,7 @@ class guiDCM:
             self.data4 = Label(self.paitentDataEntry, text = "Atrial Pules Width")
             self.data5 = Label(self.paitentDataEntry, text = "Ventrical Amplitude")
             self.data6 = Label(self.paitentDataEntry, text = "Ventrical Pules Width")
-            self.data7 = Label(self.paitentDataEntry, text = "vrp")
+            self.data7 = Label(self.paitentDataEntry, text = "VRP")
             self.data8 = Label(self.paitentDataEntry, text = "ARP")
 
             # these string variables are initiated so that the user input can be stored
@@ -415,6 +415,23 @@ class guiDCM:
             messagebox.showerror("Input Error","The Lower Rate Limit cannot be larger than the Upper Rate Limit")
             self.lowRateLim.set("")
             self.upperRateLim.set("")
+        
+        if (float(self.atrialAmp.get()) < 0 or float(self.atrialAmp.get()) > 5):
+            messagebox.showerror("Input Error","The Arital Amplitude has to be between 0V and 5V")
+            self.atrialAmp.set("")
+
+        if (float(self.atrialPulesWidth.get()) < 0.05 or float(self.atrialPulesWidth.get()) > 1.9):
+            messagebox.showerror("Input Error","The Arital Pules Width has to be between 0.05ms and 1.9ms")
+            self.atrialPulesWidth.set("")
+
+        if (float(self.ventricalAmp.get()) < 0 or float(self.ventricalAmp.get()) > 5):
+            messagebox.showerror("Input Error","The Ventrical Amplitude has to be between 0V and 5V")
+            self.ventricalAmp.set("")
+
+        if (float(self.ventricalPulesWidth.get()) < 0.05 or float(self.ventricalPulesWidth.get()) > 1.9):
+            messagebox.showerror("Input Error","The Ventrical Pules Width has to be between 0.05ms and 1.9ms")
+            self.ventricalPulesWidth.set("")
+
 
         self.patientData = {}
 
