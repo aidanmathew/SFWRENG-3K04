@@ -432,6 +432,14 @@ class guiDCM:
             messagebox.showerror("Input Error","The Ventrical Pules Width has to be between 0.05ms and 1.9ms")
             self.ventricalPulesWidth.set("")
 
+        if (float(self.vrp.get()) < 150 or float(self.vrp.get()) > 500):
+            messagebox.showerror("Input Error","The Ventrical Refactory Period has to be between 150ms and 500ms")
+            self.vrp.set("")
+
+        if (float(self.arp.get()) < 150 or float(self.arp.get()) > 500):
+            messagebox.showerror("Input Error","The Atrial Refactory Period has to be between 150ms and 500ms")
+            self.arp.set("")
+
 
         self.patientData = {}
 
