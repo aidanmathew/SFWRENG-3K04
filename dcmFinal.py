@@ -264,7 +264,7 @@ class guiDCM:
             self.visibleScreen("programScreen")
 
             # this will reveal the stored user data
-            self.readPatientData(self.currentUsername)
+            #self.readPatientData(self.currentUsername)
             return False
         else:
             self.window = Frame(self.root, padx = 20, pady = 10)
@@ -300,7 +300,7 @@ class guiDCM:
             self.programModeLabel.grid(row = 0, column = 0)
             self.programModeCombobox = ttk.Combobox(self.paitentDataEntry, width = 6)
             self.programModeCombobox.grid(row = 0, column = 2)
-            self.programModeCombobox['values'] = ('AAO', 'VOO', 'AII', 'VII')
+            self.programModeCombobox['values'] = ('AOO','VOO','AAI','VVI','AOOR','VOOR','VVIR','AAIR')
 
             # this will create the labels for the patient Data Entries
             self.data1 = Label(self.paitentDataEntry, text = "Lower Rate Limit")
@@ -311,6 +311,13 @@ class guiDCM:
             self.data6 = Label(self.paitentDataEntry, text = "Ventrical Pules Width")
             self.data7 = Label(self.paitentDataEntry, text = "VRP")
             self.data8 = Label(self.paitentDataEntry, text = "ARP")
+            self.data9 = Label(self.paitentDataEntry, text = "PVARP")
+            self.data10 = Label(self.paitentDataEntry, text = "Hystersis")
+            self.data11 = Label(self.paitentDataEntry, text = "Rate Smoothing")
+            self.data12 = Label(self.paitentDataEntry, text = "Activity Threshold")
+            self.data13 = Label(self.paitentDataEntry, text = "Reaction Time")
+            self.data14 = Label(self.paitentDataEntry, text = "Respnse Factor")
+            self.data15 = Label(self.paitentDataEntry, text = "Recovery Time")
 
             # these string variables are initiated so that the user input can be stored
             self.lowRateLim = StringVar()
@@ -321,6 +328,14 @@ class guiDCM:
             self.ventricalPulesWidth = StringVar()
             self.vrp = StringVar()
             self.arp = StringVar()
+            self.pvarp = StringVar()
+            self.hystersis = StringVar()
+            self.rateSmoothing = StringVar()
+            self.activityThreshold = StringVar()
+            self.reactionTime = StringVar()
+            self.responseTime = StringVar()
+            self.recoveryTime = StringVar()
+
 
             # this will use TKinter in order to store the user entry into the previous string variables
             self.val1 = ttk.Entry(self.paitentDataEntry, textvariable = self.lowRateLim)
@@ -331,6 +346,13 @@ class guiDCM:
             self.val6 = ttk.Entry(self.paitentDataEntry, textvariable = self.ventricalPulesWidth)
             self.val7 = ttk.Entry(self.paitentDataEntry, textvariable = self.vrp)
             self.val8 = ttk.Entry(self.paitentDataEntry, textvariable = self.arp)
+            self.val9 = ttk.Entry(self.paitentDataEntry, textvariable = self.pvarp)
+            self.val10 = ttk.Entry(self.paitentDataEntry, textvariable = self.hystersis)
+            self.val11 = ttk.Entry(self.paitentDataEntry, textvariable = self.rateSmoothing)
+            self.val12 = ttk.Entry(self.paitentDataEntry, textvariable = self.activityThreshold)
+            self.val13 = ttk.Entry(self.paitentDataEntry, textvariable = self.reactionTime)
+            self.val14 = ttk.Entry(self.paitentDataEntry, textvariable = self.responseTime)
+            self.val15 = ttk.Entry(self.paitentDataEntry, textvariable = self.recoveryTime)
             
             # using TKinter UI in order to align the information into a grid layout
             self.data1.grid(row = 1, column = 0, padx = 5, pady = 5)
@@ -341,7 +363,14 @@ class guiDCM:
             self.data6.grid(row = 6, column = 0, padx = 5, pady = 5)
             self.data7.grid(row = 7, column = 0, padx = 5, pady = 5)
             self.data8.grid(row = 8, column = 0, padx = 5, pady = 5)
-            
+            self.data9.grid(row = 1, column = 3, padx = 5, pady = 5)
+            self.data10.grid(row = 2, column = 3, padx = 5, pady = 5)
+            self.data11.grid(row = 3, column = 3, padx = 5, pady = 5)
+            self.data12.grid(row = 4, column = 3, padx = 5, pady = 5)
+            self.data13.grid(row = 5, column = 3, padx = 5, pady = 5)
+            self.data14.grid(row = 6, column = 3, padx = 5, pady = 5)
+            self.data15.grid(row = 7, column = 3, padx = 5, pady = 5)
+
             self.val1.grid(row = 1, column = 2)
             self.val2.grid(row = 2, column = 2)
             self.val3.grid(row = 3, column = 2)
@@ -350,10 +379,17 @@ class guiDCM:
             self.val6.grid(row = 6, column = 2)
             self.val7.grid(row = 7, column = 2)
             self.val8.grid(row = 8, column = 2)
+            self.val9.grid(row = 1, column = 5)
+            self.val10.grid(row = 2, column = 5)
+            self.val11.grid(row = 3, column = 5)
+            self.val12.grid(row = 4, column = 5)
+            self.val13.grid(row = 5, column = 5)
+            self.val14.grid(row = 6, column = 5)
+            self.val15.grid(row = 7, column = 5)
 
             # creating the confirm button for the user
             self.confirmButton = ttk.Button(self.paitentDataEntry, text = "Confirm", command = lambda:self.writePatientData(self.currentUsername))
-            self.confirmButton.grid(row = 11, column = 4, padx = 5, sticky = E)
+            self.confirmButton.grid(row = 11, column = 5, padx = 5, sticky = E)
 
             # this will display the user data that is stored
             self.readPatientData(self.currentUsername)
@@ -402,7 +438,33 @@ class guiDCM:
 
     # this function will put the data into the database JSON
     def writePatientData(self, username):
-        
+        """self.pacingmode = StringVar()
+        pacingmode = self.programModeCombobox.get()
+        print(pacingmode)
+
+        self.aoo = ["LRL","URL","AAMP","APW"]
+        self.voo = ["LRL","URL","VAMP","VPW"]
+        self.aai = ["LRL","URL","AAMP","APW","AS","ARP","PVARP","HS","RS"]
+        self.vvi = ["LRL","URL","VAMP","VPW","VS","VRP","PVARP","HS","RS"]
+        self.aoor = ["LRL","URL","MSR","AAMP","APW","AT","RT","RF","RCOVT"]
+        self.voor = ["LRL","URL","MSR","VAMP","VPW","AT","RT","RF","RCOVT"]
+        self.vvir = ["LRL","URL","MSR","VAMP","VPW","VS","VRP","PVARP","HS","RS","AT","RT","RF","RCOVT"]
+        self.aair = ["LRL","URL","MSR","AAMP","APW","AS","ARP","PVARP","HS","RS","AT","RT","RF","RCOVT"]
+        print("HI")
+        if (pacingmode == "AOO"):
+            print("HII")
+            n = 0
+            self.LRL = StringVar()
+            self.URL = StringVar()
+            self.AAMP = StringVar()
+            self.APW = StringVar()
+            for self.i in self.aoo:
+                self.l =  Label(self.paitentDataEntry, text = pacingmode[n])
+                self.l.grid(row = 1, column = 0, padx = 5, pady = 5)
+                self.e = ttk.Entry(self.paitentDataEntry, textvariable = self.pacingmode[n])
+                self.e.grid(row = 1, column = 2)
+                n = n + 1"""
+
         if (int(self.lowRateLim.get()) < 30 or int(self.lowRateLim.get()) > 175):
             messagebox.showerror("Input Error","The Lower Rate Limit has to be between 30ppm and 175ppm")
             self.lowRateLim.set("")
