@@ -338,7 +338,7 @@ class guiDCM:
 
 
             # this will use TKinter in order to store the user entry into the previous string variables
-            self.val1 = ttk.Entry(self.paitentDataEntry, textvariable = self.lowRateLim)
+            self.val1 = Spinbox(self.paitentDataEntry,values = list(range(30,51,5)) + list(range(51,90,1)) + list(range(90,180,5)), textvariable = self.lowRateLim)
             self.val2 = ttk.Entry(self.paitentDataEntry, textvariable = self.upperRateLim)
             self.val3 = ttk.Entry(self.paitentDataEntry, textvariable = self.atrialAmp)
             self.val4 = ttk.Entry(self.paitentDataEntry, textvariable = self.atrialPulesWidth)
