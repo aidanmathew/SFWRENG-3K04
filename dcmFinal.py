@@ -5,6 +5,11 @@ from tkinter import messagebox
 import json
 import os
 
+# Libaries regarding assignment 2.
+import serial
+import serial.tools.list_ports
+import struct
+
 class guiDCM:
     # defining the directory for the image logo and respective directory
     imageFilepath = "./images"
@@ -287,13 +292,20 @@ class guiDCM:
             self.notebook.add(self.hardwareInformation, text = "Hardware Status", padding = (10, 10))
 
             # This defines the tab that contains the hardware status information
-            self.boardConnection = Label(self.hardwareInformation, text = "The borad is connected/disconnected")
-            self.boardSerialNum = Label(self.hardwareInformation, text = "The serial number of the board is ...")
-            self.sameBoard = Label(self.hardwareInformation, text = "Is this the same board YES/NO")
+            try:
+                frdm_port = serial.Serial('COM4')
+                print(frdm_port)
+                connectionStatus = "Connected"
+                portNum = frdm_port.port
+            except:
+                connectionStatus = "Disconnected"
+            self.boardConnection = Label(self.hardwareInformation, text = "The board is " + connectionStatus)
+            self.boardSerialNum = Label(self.hardwareInformation, text = "The serial number of the board is " + portNum)
+            self.boardInfo = Label(self.hardwareInformation, text = "The board is connected on " + portNum)
             
             self.boardConnection.grid(row = 1, column = 0, padx = 5, pady = 5, sticky = W) 
             self.boardSerialNum.grid(row = 2, column = 0, padx = 5, pady = 5, sticky = W) 
-            self.sameBoard.grid(row = 3, column = 0, padx = 5, pady = 5, sticky = W) 
+            self.boardInfo.grid(row = 3, column = 0, padx = 5, pady = 5, sticky = W) 
 
             # this will use TKinter in order to create the dropdown UI for the Pacing Modes
             self.programModeLabel = Label(self.paitentDataEntry, text = "Select Pacing Mode:")
