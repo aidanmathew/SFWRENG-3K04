@@ -4,6 +4,8 @@ from tkinter import ttk
 from tkinter import messagebox
 import json
 import os
+import numpy as np
+import math
 
 class guiDCM:
     # defining the directory for the image logo and respective directory
@@ -305,23 +307,25 @@ class guiDCM:
             # this will create the labels for the patient Data Entries
             self.data1 = Label(self.paitentDataEntry, text = "Lower Rate Limit")
             self.data2 = Label(self.paitentDataEntry, text = "Upper Rate Limit")
-            self.data3 = Label(self.paitentDataEntry, text = "Atrial Amplitude")
-            self.data4 = Label(self.paitentDataEntry, text = "Atrial Pules Width")
-            self.data5 = Label(self.paitentDataEntry, text = "Ventrical Amplitude")
-            self.data6 = Label(self.paitentDataEntry, text = "Ventrical Pules Width")
-            self.data7 = Label(self.paitentDataEntry, text = "VRP")
-            self.data8 = Label(self.paitentDataEntry, text = "ARP")
-            self.data9 = Label(self.paitentDataEntry, text = "PVARP")
-            self.data10 = Label(self.paitentDataEntry, text = "Hystersis")
-            self.data11 = Label(self.paitentDataEntry, text = "Rate Smoothing")
-            self.data12 = Label(self.paitentDataEntry, text = "Activity Threshold")
-            self.data13 = Label(self.paitentDataEntry, text = "Reaction Time")
-            self.data14 = Label(self.paitentDataEntry, text = "Respnse Factor")
-            self.data15 = Label(self.paitentDataEntry, text = "Recovery Time")
+            self.data3 = Label(self.paitentDataEntry, text = "maximum Sensor Rate")
+            self.data4 = Label(self.paitentDataEntry, text = "Atrial Amplitude")
+            self.data5 = Label(self.paitentDataEntry, text = "Atrial Pules Width")
+            self.data6 = Label(self.paitentDataEntry, text = "Ventrical Amplitude")
+            self.data7 = Label(self.paitentDataEntry, text = "Ventrical Pules Width")
+            self.data8 = Label(self.paitentDataEntry, text = "VRP")
+            self.data9 = Label(self.paitentDataEntry, text = "ARP")
+            self.data10 = Label(self.paitentDataEntry, text = "PVARP")
+            self.data11 = Label(self.paitentDataEntry, text = "Hystersis")
+            self.data12 = Label(self.paitentDataEntry, text = "Rate Smoothing")
+            self.data13 = Label(self.paitentDataEntry, text = "Activity Threshold")
+            self.data14 = Label(self.paitentDataEntry, text = "Reaction Time (sec)")
+            self.data15 = Label(self.paitentDataEntry, text = "Respnse Factor")
+            self.data16 = Label(self.paitentDataEntry, text = "Recovery Time (sec)")
 
             # these string variables are initiated so that the user input can be stored
             self.lowRateLim = StringVar()
             self.upperRateLim = StringVar()
+            self.maxSensorRate = StringVar()
             self.atrialAmp = StringVar()
             self.atrialPulesWidth = StringVar()
             self.ventricalAmp = StringVar()
@@ -338,21 +342,22 @@ class guiDCM:
 
 
             # this will use TKinter in order to store the user entry into the previous string variables
-            self.val1 = Spinbox(self.paitentDataEntry,values = list(range(30,51,5)) + list(range(51,90,1)) + list(range(90,180,5)), textvariable = self.lowRateLim)
-            self.val2 = ttk.Entry(self.paitentDataEntry, textvariable = self.upperRateLim)
-            self.val3 = ttk.Entry(self.paitentDataEntry, textvariable = self.atrialAmp)
-            self.val4 = ttk.Entry(self.paitentDataEntry, textvariable = self.atrialPulesWidth)
-            self.val5 = ttk.Entry(self.paitentDataEntry, textvariable = self.ventricalAmp)
-            self.val6 = ttk.Entry(self.paitentDataEntry, textvariable = self.ventricalPulesWidth)
-            self.val7 = ttk.Entry(self.paitentDataEntry, textvariable = self.vrp)
-            self.val8 = ttk.Entry(self.paitentDataEntry, textvariable = self.arp)
-            self.val9 = ttk.Entry(self.paitentDataEntry, textvariable = self.pvarp)
-            self.val10 = ttk.Entry(self.paitentDataEntry, textvariable = self.hystersis)
-            self.val11 = ttk.Entry(self.paitentDataEntry, textvariable = self.rateSmoothing)
-            self.val12 = ttk.Entry(self.paitentDataEntry, textvariable = self.activityThreshold)
-            self.val13 = ttk.Entry(self.paitentDataEntry, textvariable = self.reactionTime)
-            self.val14 = ttk.Entry(self.paitentDataEntry, textvariable = self.responseTime)
-            self.val15 = ttk.Entry(self.paitentDataEntry, textvariable = self.recoveryTime)
+            self.val1 = Spinbox(self.paitentDataEntry, state="readonly", values = list(range(25,51,5)) + list(range(51,90,1)) + list(range(90,180,5)), textvariable = self.lowRateLim)
+            self.val2 = Spinbox(self.paitentDataEntry,state="readonly", values = list(range(45,180,5)), textvariable = self.upperRateLim)
+            self.val3 = Spinbox(self.paitentDataEntry,state="readonly", values = list(range(45,180,5)), textvariable = self.maxSensorRate)
+            self.val4 = Spinbox(self.paitentDataEntry,state="readonly", values = ["OFF",1.25,2.5,3.75,5.0], textvariable = self.atrialAmp)
+            self.val5 = Spinbox(self.paitentDataEntry,state="readonly", values = [0.05,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9], textvariable = self.atrialPulesWidth)
+            self.val6 = Spinbox(self.paitentDataEntry,state="readonly", values = ["OFF",1.25,2.5,3.75,5.0], textvariable = self.ventricalAmp)
+            self.val7 = Spinbox(self.paitentDataEntry,state="readonly", values = [0.05,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9], textvariable = self.ventricalPulesWidth)
+            self.val8 = Spinbox(self.paitentDataEntry,state="readonly", values = list(range(150,500,10)), textvariable = self.vrp)
+            self.val9 = Spinbox(self.paitentDataEntry,state="readonly", values = list(range(150,500,10)), textvariable = self.arp)
+            self.val10 = Spinbox(self.paitentDataEntry,state="readonly", values = list(range(150,500,10)), textvariable = self.pvarp)
+            self.val11 = Spinbox(self.paitentDataEntry,state="readonly", values = ["OFF"] + list(range(25,51,5)) + list(range(51,90,1)) + list(range(90,180,5)), textvariable = self.hystersis)
+            self.val12 = Spinbox(self.paitentDataEntry,state="readonly", values = ["OFF","3%","6%","9%","12%","15%","18%","21%","25%"], textvariable = self.rateSmoothing)
+            self.val13 = Spinbox(self.paitentDataEntry,state="readonly", values = ["V-Low","Low","Med-Low","Med","Med-High","High","V-High"], textvariable = self.activityThreshold)
+            self.val14 = Spinbox(self.paitentDataEntry,state="readonly", values = list(range(10,60,10)), textvariable = self.reactionTime)
+            self.val15 = Spinbox(self.paitentDataEntry,state="readonly", values = list(range(1,17,1)), textvariable = self.responseTime)
+            self.val16 = Spinbox(self.paitentDataEntry,state="readonly", values = list(range(2,17,1)), textvariable = self.recoveryTime)
             
             # using TKinter UI in order to align the information into a grid layout
             self.data1.grid(row = 1, column = 0, padx = 5, pady = 5)
@@ -370,6 +375,7 @@ class guiDCM:
             self.data13.grid(row = 5, column = 3, padx = 5, pady = 5)
             self.data14.grid(row = 6, column = 3, padx = 5, pady = 5)
             self.data15.grid(row = 7, column = 3, padx = 5, pady = 5)
+            self.data16.grid(row = 8, column = 3, padx = 5, pady = 5)
 
             self.val1.grid(row = 1, column = 2)
             self.val2.grid(row = 2, column = 2)
@@ -386,6 +392,7 @@ class guiDCM:
             self.val13.grid(row = 5, column = 5)
             self.val14.grid(row = 6, column = 5)
             self.val15.grid(row = 7, column = 5)
+            self.val16.grid(row = 8, column = 5)
 
             # creating the confirm button for the user
             self.confirmButton = ttk.Button(self.paitentDataEntry, text = "Confirm", command = lambda:self.writePatientData(self.currentUsername))
@@ -479,44 +486,11 @@ class guiDCM:
                 self.e.grid(row = 1, column = 2)
                 n = n + 1"""
 
-        if (int(self.lowRateLim.get()) < 30 or int(self.lowRateLim.get()) > 175):
-            messagebox.showerror("Input Error","The Lower Rate Limit has to be between 30ppm and 175ppm")
-            self.lowRateLim.set("")
-
-        if (int(self.upperRateLim.get()) < 50 or int(self.upperRateLim.get()) > 175):
-            messagebox.showerror("Input Error","The Upper Rate Limit has to be between 50ppm and 175ppm")
-            self.upperRateLim.set("")
-
         if (int(self.lowRateLim.get()) > int(self.upperRateLim.get())):
             messagebox.showerror("Input Error","The Lower Rate Limit cannot be larger than the Upper Rate Limit")
             self.lowRateLim.set("")
             self.upperRateLim.set("")
         
-        if (float(self.atrialAmp.get()) < 0 or float(self.atrialAmp.get()) > 5):
-            messagebox.showerror("Input Error","The Arital Amplitude has to be between 0V and 5V")
-            self.atrialAmp.set("")
-
-        if (float(self.atrialPulesWidth.get()) < 0.05 or float(self.atrialPulesWidth.get()) > 1.9):
-            messagebox.showerror("Input Error","The Arital Pules Width has to be between 0.05ms and 1.9ms")
-            self.atrialPulesWidth.set("")
-
-        if (float(self.ventricalAmp.get()) < 0 or float(self.ventricalAmp.get()) > 5):
-            messagebox.showerror("Input Error","The Ventrical Amplitude has to be between 0V and 5V")
-            self.ventricalAmp.set("")
-
-        if (float(self.ventricalPulesWidth.get()) < 0.05 or float(self.ventricalPulesWidth.get()) > 1.9):
-            messagebox.showerror("Input Error","The Ventrical Pules Width has to be between 0.05ms and 1.9ms")
-            self.ventricalPulesWidth.set("")
-
-        if (float(self.vrp.get()) < 150 or float(self.vrp.get()) > 500):
-            messagebox.showerror("Input Error","The Ventrical Refactory Period has to be between 150ms and 500ms")
-            self.vrp.set("")
-
-        if (float(self.arp.get()) < 150 or float(self.arp.get()) > 500):
-            messagebox.showerror("Input Error","The Atrial Refactory Period has to be between 150ms and 500ms")
-            self.arp.set("")
-
-
         self.patientData = {}
 
         self.patientDataFile = "/"+username+".json"
