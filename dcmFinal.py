@@ -422,7 +422,14 @@ class guiDCM:
                 self.ventricalPulesWidth.set(self.patientData["value6"])
                 self.vrp.set(self.patientData["value7"])
                 self.arp.set(self.patientData["value8"])
-
+                self.pvarp.set(self.patientData["value9"])
+                self.hystersis.set(self.patientData["value10"])
+                self.rateSmoothing.set(self.patientData["value11"])
+                self.activityThreshold.set(self.patientData["value12"])
+                self.reactionTime.set(self.patientData["value13"])
+                self.responseTime.set(self.patientData["value14"])
+                self.recoveryTime.set(self.patientData["value15"])
+                
         # if unsuccessful, then the values will be set to an empty string
         except:
             self.programModeCombobox.set("")
@@ -434,6 +441,13 @@ class guiDCM:
             self.ventricalPulesWidth.set("")
             self.vrp.set("")
             self.arp.set("")
+            self.pvarp.set("")
+            self.hystersis.set("")
+            self.rateSmoothing.set("")
+            self.activityThreshold.set("")
+            self.reactionTime.set("")
+            self.responseTime.set("")
+            self.recoveryTime.set("")
 
 
     # this function will put the data into the database JSON
@@ -516,6 +530,13 @@ class guiDCM:
             self.patientData["value6"] = self.ventricalPulesWidth.get()
             self.patientData["value7"] = self.vrp.get()
             self.patientData["value8"] = self.arp.get()
+            self.patientData["value9"] = self.pvarp.get()
+            self.patientData["value10"] = self.hystersis.get()
+            self.patientData["value11"] = self.rateSmoothing.get()
+            self.patientData["value12"] = self.activityThreshold.get()
+            self.patientData["value13"] = self.reactionTime.get()
+            self.patientData["value14"] = self.responseTime.get()
+            self.patientData["value15"] = self.recoveryTime.get()
             # send the data to the file, AKA dump = writing data
             json.dump(self.patientData, oFile)
     
