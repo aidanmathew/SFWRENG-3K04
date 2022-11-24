@@ -6,7 +6,6 @@ import struct
 frdm_port = serial.Serial('COM4')
 print(frdm_port)
 print(frdm_port.port)
-print(frdm_port.id)
 
 # Start = b'\x16'
 # SYNC = b'\x22'
