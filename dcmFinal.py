@@ -272,7 +272,7 @@ class guiDCM:
             self.appendNewScreen("programScreen", self.window)
 
             # using TKinter library in order to style the window label
-            self.heading = Label(self.window, text = "Program Name Filler", font = "arial 30 bold")
+            self.heading = Label(self.window, text = "Heart Care", font = "arial 30 bold")
             self.heading.grid(row = 0)
 
             # this will create the UI tab feature that can switch between parameters and the hardware details
