@@ -4,8 +4,12 @@ from tkinter import ttk
 from tkinter import messagebox
 import json
 import os
-import numpy as np
-import math
+import string
+
+# Libaries regarding assignment 2.
+import serial
+import serial.tools.list_ports
+import struct
 
 class guiDCM:
     # defining the directory for the image logo and respective directory
@@ -293,13 +297,20 @@ class guiDCM:
             self.notebook.add(self.hardwareInformation, text = "Hardware Status", padding = (10, 10))
 
             # This defines the tab that contains the hardware status information
-            self.boardConnection = Label(self.hardwareInformation, text = "The borad is connected/disconnected")
-            self.boardSerialNum = Label(self.hardwareInformation, text = "The serial number of the board is ...")
-            self.sameBoard = Label(self.hardwareInformation, text = "Is this the same board YES/NO")
+            try:
+                frdm_port = serial.Serial('COM4')
+                print(frdm_port)
+                connectionStatus = "Connected"
+                portNum = frdm_port.port
+            except:
+                connectionStatus = "Disconnected"
+            self.boardConnection = Label(self.hardwareInformation, text = "The board is " + connectionStatus)
+            self.boardSerialNum = Label(self.hardwareInformation, text = "The serial number of the board is " + portNum)
+            self.boardInfo = Label(self.hardwareInformation, text = "The board is connected on " + portNum)
             
             self.boardConnection.grid(row = 1, column = 0, padx = 5, pady = 5, sticky = W) 
             self.boardSerialNum.grid(row = 2, column = 0, padx = 5, pady = 5, sticky = W) 
-            self.sameBoard.grid(row = 3, column = 0, padx = 5, pady = 5, sticky = W) 
+            self.boardInfo.grid(row = 3, column = 0, padx = 5, pady = 5, sticky = W) 
 
             # this will use TKinter in order to create the dropdown UI for the Pacing Modes
             self.programModeLabel = Label(self.paitentDataEntry, text = "Select Pacing Mode:")
@@ -504,16 +515,29 @@ class guiDCM:
     
     # this function will determine if a user will be added to the database or not
     def registerUser(self):
+
+        # setting variable equal to special characters.
+        specialCharacters = set(string.punctuation)
+
         # if the length of the paitentLogin is more than 10 then the database is full
         if len(self.paitentLogin) > 10:
             messagebox.showerror("The database is full, the maximum capable users are reached", "only up to 10 users can be registered")
         # check to see if username already exists
         elif (self.registerusernameAsString.get() in self.paitentLogin or self.registerusernameAsString.get() == "initialUser"):
             messagebox.showerror("The username is not valid.", "The username already exists.")
-        # check for valid username
+        # check for spaces
+        elif ((" " in self.registerusernameAsString.get()) or ("" in self.registerpasswordAsString.get())):
+            messagebox.showerror("Invalid characters.", "The username and/or password is not allowed any spaces.")
+        # check for special characters in username.
+        elif ((any(char in specialCharacters for char in self.registerusernameAsString.get()))):
+            messagebox.showerror("Invalid characters.", "The username is not allowed any special characters.")
+        # check for special characters in password.
+        elif ((any(char in specialCharacters for char in self.registerpasswordAsString.get()))):
+            messagebox.showerror("Invalid characters.", "The password is not allowed any special characters.")
+        # check for valid username length.
         elif (len(self.registerusernameAsString.get()) < 4 or 20 < len(self.registerusernameAsString.get())):
             messagebox.showwarning("The username is not valid", "The username has to be 4 to 20 characters in length")
-        # check for valid password
+        # check for valid password length.
         elif (len(self.registerpasswordAsString.get()) < 5 or 25 < len(self.registerpasswordAsString.get())):
             messagebox.showwarning("The password is not valid", "The password has to be 5 to 25 characters in length")
         # check to make sure password and username are unique from each other
