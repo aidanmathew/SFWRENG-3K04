@@ -260,13 +260,17 @@ class guiDCM:
             self.visibleScreen("profileScreen", "top")
             return True
 
+    def cmode(self,mode):
+        mode = chosenMode.get()
+        print(mode)
+
     # this function will create the window upon a successful login
     def assembleMainProgram(self):
         if self.screenCheck("programScreen"):
             self.visibleScreen("programScreen")
 
             # this will reveal the stored user data
-            #self.readPatientData(self.currentUsername)
+            self.readPatientData(self.currentUsername)
             return False
         else:
             self.window = Frame(self.root, padx = 20, pady = 10)
@@ -300,14 +304,17 @@ class guiDCM:
             # this will use TKinter in order to create the dropdown UI for the Pacing Modes
             self.programModeLabel = Label(self.paitentDataEntry, text = "Select Pacing Mode:")
             self.programModeLabel.grid(row = 0, column = 0)
-            self.programModeCombobox = ttk.Combobox(self.paitentDataEntry, width = 6)
+            pacingmode = ["OFF","AOO","VOO","AAI","VVI","AOOR","VOOR","VVIR","AAIR"]
+            global chosenMode 
+            chosenMode = StringVar()
+            chosenMode.set(pacingmode[0])
+            self.programModeCombobox = ttk.OptionMenu(self.paitentDataEntry,chosenMode,*pacingmode,command = self.cmode)
             self.programModeCombobox.grid(row = 0, column = 2)
-            self.programModeCombobox['values'] = ('AOO','VOO','AAI','VVI','AOOR','VOOR','VVIR','AAIR')
 
             # this will create the labels for the patient Data Entries
             self.data1 = Label(self.paitentDataEntry, text = "Lower Rate Limit")
             self.data2 = Label(self.paitentDataEntry, text = "Upper Rate Limit")
-            self.data3 = Label(self.paitentDataEntry, text = "maximum Sensor Rate")
+            self.data3 = Label(self.paitentDataEntry, text = "Maximum Sensor Rate")
             self.data4 = Label(self.paitentDataEntry, text = "Atrial Amplitude")
             self.data5 = Label(self.paitentDataEntry, text = "Atrial Pules Width")
             self.data6 = Label(self.paitentDataEntry, text = "Ventrical Amplitude")
@@ -419,29 +426,35 @@ class guiDCM:
             with open(self.userFilepath+self.patientDataFile, "r") as iFile:
                 # loading the user file date
                 self.patientData = json.load(iFile)
+                pacingmode = [self.patientData["pacingMode"]]
+                self.chosenMode = self.patientData["pacingMode"]
+                self.programModeCombobox = ttk.OptionMenu(self.paitentDataEntry,chosenMode,*pacingmode)
 
-                self.programModeCombobox.set(self.patientData["pacingMode"])
                 self.lowRateLim.set(self.patientData["value1"])
                 self.upperRateLim.set(self.patientData["value2"])
-                self.atrialAmp.set(self.patientData["value3"])
-                self.atrialPulesWidth.set(self.patientData["value4"])
-                self.ventricalAmp.set(self.patientData["value5"])
-                self.ventricalPulesWidth.set(self.patientData["value6"])
-                self.vrp.set(self.patientData["value7"])
-                self.arp.set(self.patientData["value8"])
-                self.pvarp.set(self.patientData["value9"])
-                self.hystersis.set(self.patientData["value10"])
-                self.rateSmoothing.set(self.patientData["value11"])
-                self.activityThreshold.set(self.patientData["value12"])
-                self.reactionTime.set(self.patientData["value13"])
-                self.responseTime.set(self.patientData["value14"])
-                self.recoveryTime.set(self.patientData["value15"])
+                self.maxSensorRate.set(self.patientData["value3"])
+                self.atrialAmp.set(self.patientData["value4"])
+                self.atrialPulesWidth.set(self.patientData["value5"])
+                self.ventricalAmp.set(self.patientData["value6"])
+                self.ventricalPulesWidth.set(self.patientData["value7"])
+                self.vrp.set(self.patientData["value8"])
+                self.arp.set(self.patientData["value9"])
+                self.pvarp.set(self.patientData["value10"])
+                self.hystersis.set(self.patientData["value11"])
+                self.rateSmoothing.set(self.patientData["value12"])
+                self.activityThreshold.set(self.patientData["value13"])
+                self.reactionTime.set(self.patientData["value14"])
+                self.responseTime.set(self.patientData["value15"])
+                self.recoveryTime.set(self.patientData["value16"])
                 
         # if unsuccessful, then the values will be set to an empty string
         except:
-            self.programModeCombobox.set("")
+            pacingmode = ["OFF"]
+            self.chosenMode = pacingmode
+            self.programModeCombobox = ttk.OptionMenu(self.paitentDataEntry,chosenMode,*pacingmode)
             self.lowRateLim.set("")
             self.upperRateLim.set("")
+            self.maxSensorRate.set("")
             self.atrialAmp.set("")
             self.atrialPulesWidth.set("")
             self.ventricalAmp.set("")
@@ -459,32 +472,6 @@ class guiDCM:
 
     # this function will put the data into the database JSON
     def writePatientData(self, username):
-        """self.pacingmode = StringVar()
-        pacingmode = self.programModeCombobox.get()
-        print(pacingmode)
-
-        self.aoo = ["LRL","URL","AAMP","APW"]
-        self.voo = ["LRL","URL","VAMP","VPW"]
-        self.aai = ["LRL","URL","AAMP","APW","AS","ARP","PVARP","HS","RS"]
-        self.vvi = ["LRL","URL","VAMP","VPW","VS","VRP","PVARP","HS","RS"]
-        self.aoor = ["LRL","URL","MSR","AAMP","APW","AT","RT","RF","RCOVT"]
-        self.voor = ["LRL","URL","MSR","VAMP","VPW","AT","RT","RF","RCOVT"]
-        self.vvir = ["LRL","URL","MSR","VAMP","VPW","VS","VRP","PVARP","HS","RS","AT","RT","RF","RCOVT"]
-        self.aair = ["LRL","URL","MSR","AAMP","APW","AS","ARP","PVARP","HS","RS","AT","RT","RF","RCOVT"]
-        print("HI")
-        if (pacingmode == "AOO"):
-            print("HII")
-            n = 0
-            self.LRL = StringVar()
-            self.URL = StringVar()
-            self.AAMP = StringVar()
-            self.APW = StringVar()
-            for self.i in self.aoo:
-                self.l =  Label(self.paitentDataEntry, text = pacingmode[n])
-                self.l.grid(row = 1, column = 0, padx = 5, pady = 5)
-                self.e = ttk.Entry(self.paitentDataEntry, textvariable = self.pacingmode[n])
-                self.e.grid(row = 1, column = 2)
-                n = n + 1"""
 
         if (int(self.lowRateLim.get()) > int(self.upperRateLim.get())):
             messagebox.showerror("Input Error","The Lower Rate Limit cannot be larger than the Upper Rate Limit")
@@ -495,22 +482,23 @@ class guiDCM:
 
         self.patientDataFile = "/"+username+".json"
         with open(self.userFilepath + self.patientDataFile, "w") as oFile:
-            self.patientData["pacingMode"] = self.programModeCombobox.get()
+            self.patientData["pacingMode"] = chosenMode.get()
             self.patientData["value1"] = self.lowRateLim.get()
             self.patientData["value2"] = self.upperRateLim.get()
-            self.patientData["value3"] = self.atrialAmp.get()
-            self.patientData["value4"] = self.atrialPulesWidth.get()
-            self.patientData["value5"] = self.ventricalAmp.get()
-            self.patientData["value6"] = self.ventricalPulesWidth.get()
-            self.patientData["value7"] = self.vrp.get()
-            self.patientData["value8"] = self.arp.get()
-            self.patientData["value9"] = self.pvarp.get()
-            self.patientData["value10"] = self.hystersis.get()
-            self.patientData["value11"] = self.rateSmoothing.get()
-            self.patientData["value12"] = self.activityThreshold.get()
-            self.patientData["value13"] = self.reactionTime.get()
-            self.patientData["value14"] = self.responseTime.get()
-            self.patientData["value15"] = self.recoveryTime.get()
+            self.patientData["value3"] = self.maxSensorRate.get()
+            self.patientData["value4"] = self.atrialAmp.get()
+            self.patientData["value5"] = self.atrialPulesWidth.get()
+            self.patientData["value6"] = self.ventricalAmp.get()
+            self.patientData["value7"] = self.ventricalPulesWidth.get()
+            self.patientData["value8"] = self.vrp.get()
+            self.patientData["value9"] = self.arp.get()
+            self.patientData["value10"] = self.pvarp.get()
+            self.patientData["value11"] = self.hystersis.get()
+            self.patientData["value12"] = self.rateSmoothing.get()
+            self.patientData["value13"] = self.activityThreshold.get()
+            self.patientData["value14"] = self.reactionTime.get()
+            self.patientData["value15"] = self.responseTime.get()
+            self.patientData["value16"] = self.recoveryTime.get()
             # send the data to the file, AKA dump = writing data
             json.dump(self.patientData, oFile)
     
