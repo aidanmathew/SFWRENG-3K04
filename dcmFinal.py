@@ -297,7 +297,7 @@ class guiDCM:
             self.notebook.add(self.hardwareInformation, text = "Hardware Status", padding = (10, 10))
 
             # This defines the tab that contains the hardware status information
-            try:
+            """try:
                 frdm_port = serial.Serial('COM4')
                 print(frdm_port)
                 connectionStatus = "Connected"
@@ -310,7 +310,7 @@ class guiDCM:
             
             self.boardConnection.grid(row = 1, column = 0, padx = 5, pady = 5, sticky = W) 
             self.boardSerialNum.grid(row = 2, column = 0, padx = 5, pady = 5, sticky = W) 
-            self.boardInfo.grid(row = 3, column = 0, padx = 5, pady = 5, sticky = W) 
+            self.boardInfo.grid(row = 3, column = 0, padx = 5, pady = 5, sticky = W)"""
 
             # this will use TKinter in order to create the dropdown UI for the Pacing Modes
             self.programModeLabel = Label(self.paitentDataEntry, text = "Select Pacing Mode:")
@@ -360,7 +360,7 @@ class guiDCM:
 
 
             # this will use TKinter in order to store the user entry into the previous string variables
-            self.val1 = Spinbox(self.paitentDataEntry, state="readonly", values = list(range(25,51,5)) + list(range(51,90,1)) + list(range(90,180,5)), textvariable = self.lowRateLim)
+            self.val1 = Spinbox(self.paitentDataEntry,state="readonly", values = list(range(25,51,5)) + list(range(51,90,1)) + list(range(90,180,5)), textvariable = self.lowRateLim)
             self.val2 = Spinbox(self.paitentDataEntry,state="readonly", values = list(range(45,180,5)), textvariable = self.upperRateLim)
             self.val3 = Spinbox(self.paitentDataEntry,state="readonly", values = list(range(45,180,5)), textvariable = self.maxSensorRate)
             self.val4 = Spinbox(self.paitentDataEntry,state="readonly", values = ["OFF",1.25,2.5,3.75,5.0], textvariable = self.atrialAmp)
@@ -369,7 +369,7 @@ class guiDCM:
             self.val7 = Spinbox(self.paitentDataEntry,state="readonly", values = [0.05,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9], textvariable = self.ventricalPulesWidth)
             self.val8 = Spinbox(self.paitentDataEntry,state="readonly", values = list(range(150,500,10)), textvariable = self.vrp)
             self.val9 = Spinbox(self.paitentDataEntry,state="readonly", values = list(range(150,500,10)), textvariable = self.arp)
-            self.val10 = Spinbox(self.paitentDataEntry,state="readonly", values = list(range(150,500,10)), textvariable = self.pvarp)
+            self.val10 = Spinbox(self.paitentDataEntry,state="disabled", values = list(range(150,500,10)), textvariable = self.pvarp)
             self.val11 = Spinbox(self.paitentDataEntry,state="readonly", values = ["OFF"] + list(range(25,51,5)) + list(range(51,90,1)) + list(range(90,180,5)), textvariable = self.hystersis)
             self.val12 = Spinbox(self.paitentDataEntry,state="readonly", values = ["OFF","3%","6%","9%","12%","15%","18%","21%","25%"], textvariable = self.rateSmoothing)
             self.val13 = Spinbox(self.paitentDataEntry,state="readonly", values = ["V-Low","Low","Med-Low","Med","Med-High","High","V-High"], textvariable = self.activityThreshold)
@@ -488,8 +488,91 @@ class guiDCM:
             messagebox.showerror("Input Error","The Lower Rate Limit cannot be larger than the Upper Rate Limit")
             self.lowRateLim.set("")
             self.upperRateLim.set("")
+
+        if (chosenMode.get() == "AOO"):
+            self.maxSensorRate.set("")
+            self.ventricalAmp.set("")
+            self.ventricalPulesWidth.set("")
+            self.vrp.set("")
+            self.arp.set("")
+            self.pvarp.set("")
+            self.hystersis.set("")
+            self.rateSmoothing.set("")
+            self.activityThreshold.set("")
+            self.reactionTime.set("")
+            self.responseTime.set("")
+            self.recoveryTime.set("")
+        
+        if (chosenMode.get() == "VOO"):
+            self.maxSensorRate.set("")
+            self.atrialAmp.set("")
+            self.atrialPulesWidth.set("")
+            self.vrp.set("")
+            self.arp.set("")
+            self.pvarp.set("")
+            self.hystersis.set("")
+            self.rateSmoothing.set("")
+            self.activityThreshold.set("")
+            self.reactionTime.set("")
+            self.responseTime.set("")
+            self.recoveryTime.set("")
+
+        if (chosenMode.get() == "AAI"):
+            self.maxSensorRate.set("")
+            self.ventricalAmp.set("")
+            self.ventricalPulesWidth.set("")
+            self.vrp.set("")
+            self.pvarp.set("")
+            self.activityThreshold.set("")
+            self.reactionTime.set("")
+            self.responseTime.set("")
+            self.recoveryTime.set("")
+        
+        if (chosenMode.get() == "VVI"):
+            self.maxSensorRate.set("")
+            self.atrialAmp.set("")
+            self.atrialPulesWidth.set("")
+            self.arp.set("")
+            self.pvarp.set("")
+            self.activityThreshold.set("")
+            self.reactionTime.set("")
+            self.responseTime.set("")
+            self.recoveryTime.set("")
+
+        if (chosenMode.get() == "AOOR"):
+            self.ventricalAmp.set("")
+            self.ventricalPulesWidth.set("")
+            self.vrp.set("")
+            self.arp.set("")
+            self.pvarp.set("")
+            self.hystersis.set("")
+            self.rateSmoothing.set("")
+
+        if (chosenMode.get() == "VOOR"):
+            self.maxSensorRate.set("")
+            self.atrialAmp.set("")
+            self.atrialPulesWidth.set("")
+            self.vrp.set("")
+            self.arp.set("")
+            self.pvarp.set("")
+            self.hystersis.set("")
+            self.rateSmoothing.set("")
+
+        if (chosenMode.get() == "AAIR"):
+            self.ventricalAmp.set("")
+            self.ventricalPulesWidth.set("")
+            self.vrp.set("")
+            self.pvarp.set("")
+
+        if (chosenMode.get() == "VVIR"):
+            self.maxSensorRate.set("")
+            self.atrialAmp.set("")
+            self.atrialPulesWidth.set("")
+            self.arp.set("")
+            self.pvarp.set("")
         
         self.patientData = {}
+        
 
         self.patientDataFile = "/"+username+".json"
         with open(self.userFilepath + self.patientDataFile, "w") as oFile:
