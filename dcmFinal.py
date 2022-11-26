@@ -304,6 +304,7 @@ class guiDCM:
                 portNum = frdm_port.port
             except:
                 connectionStatus = "Disconnected"
+                portNum = "DISCONNECTED"
             self.boardConnection = Label(self.hardwareInformation, text = "The board is " + connectionStatus)
             self.boardSerialNum = Label(self.hardwareInformation, text = "The serial number of the board is " + portNum)
             self.boardInfo = Label(self.hardwareInformation, text = "The board is connected on " + portNum)
