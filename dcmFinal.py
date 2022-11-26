@@ -297,7 +297,7 @@ class guiDCM:
             self.notebook.add(self.hardwareInformation, text = "Hardware Status", padding = (10, 10))
 
             # This defines the tab that contains the hardware status information
-            """try:
+            try:
                 frdm_port = serial.Serial('COM4')
                 print(frdm_port)
                 connectionStatus = "Connected"
@@ -310,7 +310,7 @@ class guiDCM:
             
             self.boardConnection.grid(row = 1, column = 0, padx = 5, pady = 5, sticky = W) 
             self.boardSerialNum.grid(row = 2, column = 0, padx = 5, pady = 5, sticky = W) 
-            self.boardInfo.grid(row = 3, column = 0, padx = 5, pady = 5, sticky = W)"""
+            self.boardInfo.grid(row = 3, column = 0, padx = 5, pady = 5, sticky = W)
 
             # this will use TKinter in order to create the dropdown UI for the Pacing Modes
             self.programModeLabel = Label(self.paitentDataEntry, text = "Select Pacing Mode:")
