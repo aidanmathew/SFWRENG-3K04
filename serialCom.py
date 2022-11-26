@@ -1,31 +1,37 @@
 import serial
 import serial.tools.list_ports
 import struct
+import time
 
 # For Aidan's computer the port was found to be COM4
 frdm_port = serial.Serial('COM4')
 print(frdm_port)
 print(frdm_port.port)
-print()
 
-# Start = b'\x16'
-# SYNC = b'\x22'
-# Fn_set = b'\x55'
-# red_en = struct.pack("B", 1)
-# green_en = struct.pack("B", 0)
-# blue_en = struct.pack("B", 1)
-# off_time = struct.pack("f", 3.1415926)
+communicationPort = 'COM4'
+Start = b'\x16'
+SYNC = b'\x22'
+Fn_set = b'\x55'
+
+
+red_en = struct.pack("B", 68)
+blue_en = struct.pack("B", 19)
+off_time = struct.pack("f", 4.20)
 # switch_time = struct.pack("H", 500)
 
-# Signal_set = Start + Fn_set + red_en + green_en + blue_en + off_time + switch_time
-# Signal_echo = Start + SYNC + red_en + green_en + blue_en + off_time + switch_time
+Signal_set = Start + Fn_set + red_en + blue_en + off_time 
+Signal_echo = Start + SYNC + red_en + blue_en + off_time 
 
-# with serial.Serial(frdm_port, 115200) as pacemaker:
-#     pacemaker.write(Signal_set)
+with serial.Serial(communicationPort, 115200) as pacemaker:
+     pacemaker.write(Signal_set)
+     time.sleep(3)
 
-# with serial.Serial(frdm_port, 115200) as pacemaker:
-#     pacemaker.write(Signal_echo)
-#     data = pacemaker.read(9)
+print("The following is recieved from the board:")
+
+with serial.Serial(frdm_port, 115200) as pacemaker:
+     pacemaker.write(Signal_echo)
+     time.sleep(3)
+     data = pacemaker.read(6)
 #     red_rev = data[0]
 #     green_rev = data[1]
 #     blue_rev = data[2]
