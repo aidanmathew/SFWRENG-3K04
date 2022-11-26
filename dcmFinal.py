@@ -295,6 +295,8 @@ class guiDCM:
             self.notebook.add(self.paitentDataEntry, text = "Pacemaker Attributes", padding = (10, 10))
             self.hardwareInformation = Frame(self.notebook)
             self.notebook.add(self.hardwareInformation, text = "Hardware Status", padding = (10, 10))
+            self.egramGraph = Frame(self.notebook)
+            self.notebook.add(self.egramGraph, text = "Graph", padding = (10, 10))
 
             # This defines the tab that contains the hardware status information
             try:
