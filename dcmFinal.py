@@ -10,6 +10,12 @@ import string
 import serial
 import serial.tools.list_ports
 import struct
+from matplotlib import pyplot as plt
+import matplotlib.animation as animation
+from matplotlib import style
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
+import numpy as np
 
 class guiDCM:
     # defining the directory for the image logo and respective directory
@@ -242,11 +248,50 @@ class guiDCM:
 
             self.assembleMainProfile()
             self.assembleMainProgram()
+            self.assembleEgram()
 
         # otherwise, the login was not able to occur
         else:
             messagebox.showerror("Login Unsuccessful", "The username or the password is not correct.")
 
+    xar = [0, 0.1]
+    yar = [0, 0]
+
+    pulseplot = False
+
+    def change_state(self):
+        if guiDCM.pulseplot == True:
+            guiDCM.pulseplot = False
+        else:
+            guiDCM.pulseplot = True
+
+    def assembleEgram(self):
+                
+                self.fig = plt.Figure()
+                self.ax = self.fig.add_subplot(211)
+                self.ax.grid()
+                self.line, = self.ax.plot(guiDCM.xar,guiDCM.yar)
+                self.ax.set_ylim(-1, 1) 
+                self.graph = FigureCanvasTkAgg(self.fig, master=self.egramGraph)
+                self.graph.get_tk_widget().pack(side=BOTTOM, fill=X)
+
+                self.stopstartButton = ttk.Button(self.egramGraph, text="Start/Stop", command=lambda:self.gui_handler())
+                self.stopstartButton.pack(side=TOP)
+                self.graph.draw()
+
+    def refresh(self):
+        if guiDCM.pulseplot == True:
+            guiDCM.xar = np.append(guiDCM.xar, guiDCM.xar[-1]+0.1)
+            guiDCM.yar = np.append(guiDCM.yar, np.sin(guiDCM.xar[-1]))
+            self.ax.set_xlim(guiDCM.xar[-1]-10, guiDCM.xar[-1])
+            self.line.set_data(guiDCM.xar,guiDCM.yar)       
+            self.graph.draw()
+            self.root.after(10, self.refresh)
+
+    def gui_handler(self):
+        self.change_state()
+        self.refresh()
+    
     # this function will assemble the main header
     def assembleMainProfile(self):
         if self.screenCheck("profileScreen"):
@@ -314,6 +359,9 @@ class guiDCM:
             self.boardConnection.grid(row = 1, column = 0, padx = 5, pady = 5, sticky = W) 
             self.boardSerialNum.grid(row = 2, column = 0, padx = 5, pady = 5, sticky = W) 
             self.boardInfo.grid(row = 3, column = 0, padx = 5, pady = 5, sticky = W)
+
+            # EGRAM code
+            
 
             # this will use TKinter in order to create the dropdown UI for the Pacing Modes
             self.programModeLabel = Label(self.paitentDataEntry, text = "Select Pacing Mode:")
