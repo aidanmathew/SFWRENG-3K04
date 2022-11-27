@@ -342,6 +342,8 @@ class guiDCM:
             self.data14 = Label(self.paitentDataEntry, text = "Reaction Time (sec)")
             self.data15 = Label(self.paitentDataEntry, text = "Respnse Factor")
             self.data16 = Label(self.paitentDataEntry, text = "Recovery Time (sec)")
+            self.data17 = Label(self.paitentDataEntry, text = "Atrial Sensitivity")
+            self.data18 = Label(self.paitentDataEntry, text = "Ventrical Sensitivity")
 
             # these string variables are initiated so that the user input can be stored
             self.lowRateLim = StringVar()
@@ -360,6 +362,8 @@ class guiDCM:
             self.reactionTime = StringVar()
             self.responseTime = StringVar()
             self.recoveryTime = StringVar()
+            self.atrialSens = StringVar()
+            self.ventricalSens = StringVar()
 
 
             # this will use TKinter in order to store the user entry into the previous string variables
@@ -379,6 +383,8 @@ class guiDCM:
             self.val14 = Spinbox(self.paitentDataEntry,state="readonly", values = list(range(10,60,10)), textvariable = self.reactionTime)
             self.val15 = Spinbox(self.paitentDataEntry,state="readonly", values = list(range(1,17,1)), textvariable = self.responseTime)
             self.val16 = Spinbox(self.paitentDataEntry,state="readonly", values = list(range(2,17,1)), textvariable = self.recoveryTime)
+            self.val17 = Spinbox(self.paitentDataEntry,state="readonly", values = [0.25,0.5,0.75,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0,7.5,8.0,8.5,9.0,9.5,10.0,], textvariable = self.atrialSens)
+            self.val18 = Spinbox(self.paitentDataEntry,state="readonly", values = [0.25,0.5,0.75,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0,7.5,8.0,8.5,9.0,9.5,10.0,], textvariable = self.ventricalSens)
             
             # using TKinter UI in order to align the information into a grid layout
             self.data1.grid(row = 1, column = 0, padx = 5, pady = 5)
@@ -389,14 +395,16 @@ class guiDCM:
             self.data6.grid(row = 6, column = 0, padx = 5, pady = 5)
             self.data7.grid(row = 7, column = 0, padx = 5, pady = 5)
             self.data8.grid(row = 8, column = 0, padx = 5, pady = 5)
-            self.data9.grid(row = 1, column = 3, padx = 5, pady = 5)
-            self.data10.grid(row = 2, column = 3, padx = 5, pady = 5)
-            self.data11.grid(row = 3, column = 3, padx = 5, pady = 5)
-            self.data12.grid(row = 4, column = 3, padx = 5, pady = 5)
-            self.data13.grid(row = 5, column = 3, padx = 5, pady = 5)
-            self.data14.grid(row = 6, column = 3, padx = 5, pady = 5)
-            self.data15.grid(row = 7, column = 3, padx = 5, pady = 5)
-            self.data16.grid(row = 8, column = 3, padx = 5, pady = 5)
+            self.data9.grid(row = 9, column = 0, padx = 5, pady = 5)
+            self.data10.grid(row = 1, column = 3, padx = 5, pady = 5)
+            self.data11.grid(row = 2, column = 3, padx = 5, pady = 5)
+            self.data12.grid(row = 3, column = 3, padx = 5, pady = 5)
+            self.data13.grid(row = 4, column = 3, padx = 5, pady = 5)
+            self.data14.grid(row = 5, column = 3, padx = 5, pady = 5)
+            self.data15.grid(row = 6, column = 3, padx = 5, pady = 5)
+            self.data16.grid(row = 7, column = 3, padx = 5, pady = 5)
+            self.data17.grid(row = 8, column = 3, padx = 5, pady = 5)
+            self.data18.grid(row = 9, column = 3, padx = 5, pady = 5)
 
             self.val1.grid(row = 1, column = 2)
             self.val2.grid(row = 2, column = 2)
@@ -406,14 +414,16 @@ class guiDCM:
             self.val6.grid(row = 6, column = 2)
             self.val7.grid(row = 7, column = 2)
             self.val8.grid(row = 8, column = 2)
-            self.val9.grid(row = 1, column = 5)
-            self.val10.grid(row = 2, column = 5)
-            self.val11.grid(row = 3, column = 5)
-            self.val12.grid(row = 4, column = 5)
-            self.val13.grid(row = 5, column = 5)
-            self.val14.grid(row = 6, column = 5)
-            self.val15.grid(row = 7, column = 5)
-            self.val16.grid(row = 8, column = 5)
+            self.val9.grid(row = 9, column = 2)
+            self.val10.grid(row = 1, column = 5)
+            self.val11.grid(row = 2, column = 5)
+            self.val12.grid(row = 3, column = 5)
+            self.val13.grid(row = 4, column = 5)
+            self.val14.grid(row = 5, column = 5)
+            self.val15.grid(row = 6, column = 5)
+            self.val16.grid(row = 7, column = 5)
+            self.val17.grid(row = 8, column = 5)
+            self.val18.grid(row = 9, column = 5)
 
             # creating the confirm button for the user
             self.confirmButton = ttk.Button(self.paitentDataEntry, text = "Confirm", command = lambda:self.writePatientData(self.currentUsername))
@@ -482,6 +492,8 @@ class guiDCM:
             self.reactionTime.set("")
             self.responseTime.set("")
             self.recoveryTime.set("")
+            self.atrialSens.set("")
+            self.ventricalSens.set("")
 
 
     # this function will put the data into the database JSON
