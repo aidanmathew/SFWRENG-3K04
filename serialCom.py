@@ -12,7 +12,7 @@ import json
 import sys
 
 
-COMPORT = 'COM4' #change me to the correct COM port
+COMPORT = 'COM3' #change me to the correct COM port
 Start = b'\x16'
 SYNC = b'\x22'
 Fn_set = b'\x55'
@@ -23,6 +23,7 @@ username = "jibin"
 userFilepath = "./user"
 patientDatabase = "/database.json"
 patientDataFile = "/"+username+".json"
+
 patientData = {}
 
 def endian_checker():
@@ -84,13 +85,14 @@ with open(userFilepath+patientDataFile, "r") as iFile:
     rct = int(patientData["value16"])
     asen = float(patientData["value17"])
     vsen = float(patientData["value18"])
+    #print (type(Start),type(Fn_set),type(lrl), type(url), type(vamp), type(aamp), type(vpw), type(apw), type(vsen), type(asen), type(arp), type(vrp), type(msr), type(at), type(rt), type(res), type(rct))
 
 if (endian_checker() == True):
-    Signal_set = struct.pack("<ccBBFFFFFFHHBBBBB",Start, Fn_set, lrl, url, vamp, aamp, vpw, apw, vsen, asen, arp, vrp, msr, at, rt, res, rct) 
-    Signal_echo = struct.pack("<ccBBFFFFFFHHBBBBB",Start, Fn_set, lrl, url, vamp, aamp, vpw, apw, vsen, asen, arp, vrp, msr, at, rt, res, rct)
+    Signal_set = struct.pack("<ccBBffffffHHBBBBB",Start, Fn_set, lrl, url, vamp, aamp, vpw, apw, vsen, asen, arp, vrp, msr, at, rt, res, rct) 
+    Signal_echo = struct.pack("<ccBBffffffHHBBBBB",Start, SYNC, lrl, url, vamp, aamp, vpw, apw, vsen, asen, arp, vrp, msr, at, rt, res, rct)
 else:
-    Signal_set = struct.pack(">ccBBFFFFFFHHBBBBB",Start, Fn_set, lrl, url, vamp, aamp, vpw, apw, vsen, asen, arp, vrp, msr, at, rt, res, rct) 
-    Signal_echo = struct.pack(">ccBBFFFFFFHHBBBBB",Start, Fn_set, lrl, url, vamp, aamp, vpw, apw, vsen, asen, arp, vrp, msr, at, rt, res, rct)
+    Signal_set = struct.pack(">ccBBffffffHHBBBBB",Start, Fn_set, lrl, url, vamp, aamp, vpw, apw, vsen, asen, arp, vrp, msr, at, rt, res, rct) 
+    Signal_echo = struct.pack(">ccBBffffffHHBBBBB",Start, SYNC, lrl, url, vamp, aamp, vpw, apw, vsen, asen, arp, vrp, msr, at, rt, res, rct)
 
 
 print (Signal_set)

@@ -382,7 +382,7 @@ class guiDCM:
             self.data9 = Label(self.paitentDataEntry, text = "ARP")
             self.data10 = Label(self.paitentDataEntry, text = "PVARP")
             self.data11 = Label(self.paitentDataEntry, text = "Hystersis")
-            self.data12 = Label(self.paitentDataEntry, text = "Rate Smoothing")
+            self.data12 = Label(self.paitentDataEntry, text = "Rate Smoothing (%)")
             self.data13 = Label(self.paitentDataEntry, text = "Activity Threshold")
             self.data14 = Label(self.paitentDataEntry, text = "Reaction Time (sec)")
             self.data15 = Label(self.paitentDataEntry, text = "Respnse Factor")
@@ -423,7 +423,7 @@ class guiDCM:
             self.val9 = Spinbox(self.paitentDataEntry,state="readonly", values = list(range(150,500,10)), textvariable = self.arp)
             self.val10 = Spinbox(self.paitentDataEntry,state="disabled", values = list(range(150,500,10)), textvariable = self.pvarp)
             self.val11 = Spinbox(self.paitentDataEntry,state="readonly", values = ["OFF"] + list(range(25,51,5)) + list(range(51,90,1)) + list(range(90,180,5)), textvariable = self.hystersis)
-            self.val12 = Spinbox(self.paitentDataEntry,state="readonly", values = ["OFF","3%","6%","9%","12%","15%","18%","21%","25%"], textvariable = self.rateSmoothing)
+            self.val12 = Spinbox(self.paitentDataEntry,state="readonly", values = ["OFF","3","6","9","12","15","18","21","25"], textvariable = self.rateSmoothing)
             self.val13 = Spinbox(self.paitentDataEntry,state="readonly", values = ["V-Low","Low","Med-Low","Med","Med-High","High","V-High"], textvariable = self.activityThreshold)
             self.val14 = Spinbox(self.paitentDataEntry,state="readonly", values = list(range(10,60,10)), textvariable = self.reactionTime)
             self.val15 = Spinbox(self.paitentDataEntry,state="readonly", values = list(range(1,17,1)), textvariable = self.responseTime)
@@ -568,6 +568,8 @@ class guiDCM:
             self.recoveryTime.set("0")
             self.atrialSens.set("0")
             self.ventricalSens.set("0")
+            self.atrialSens.set("0")
+            self.ventricalSens.set("0")
         
         if (chosenMode.get() == "VOO"):
             self.maxSensorRate.set("0")
@@ -584,6 +586,8 @@ class guiDCM:
             self.recoveryTime.set("0")
             self.atrialSens.set("0")
             self.ventricalSens.set("0")
+            self.atrialSens.set("0")
+            self.ventricalSens.set("0")
 
         if (chosenMode.get() == "AAI"):
             self.maxSensorRate.set("0")
@@ -595,6 +599,7 @@ class guiDCM:
             self.reactionTime.set("0")
             self.responseTime.set("0")
             self.recoveryTime.set("0")
+            self.ventricalSens.set("0")
         
         if (chosenMode.get() == "VVI"):
             self.maxSensorRate.set("0")
@@ -606,6 +611,8 @@ class guiDCM:
             self.reactionTime.set("0")
             self.responseTime.set("0")
             self.recoveryTime.set("0")
+            self.atrialSens.set("0")
+            self.ventricalSens.set("0")
 
         if (chosenMode.get() == "AOOR"):
             self.ventricalAmp.set("0")
@@ -615,6 +622,8 @@ class guiDCM:
             self.pvarp.set("0")
             self.hystersis.set("0")
             self.rateSmoothing.set("0")
+            self.atrialSens.set("0")
+            self.ventricalSens.set("0")
             self.atrialSens.set("0")
             self.ventricalSens.set("0")
 
@@ -629,12 +638,15 @@ class guiDCM:
             self.rateSmoothing.set("0")
             self.atrialSens.set("0")
             self.ventricalSens.set("0")
+            self.atrialSens.set("0")
+            self.ventricalSens.set("0")
 
         if (chosenMode.get() == "AAIR"):
             self.ventricalAmp.set("0")
             self.ventricalPulesWidth.set("0")
             self.vrp.set("0")
             self.pvarp.set("0")
+            self.ventricalSens.set("0")
 
         if (chosenMode.get() == "VVIR"):
             self.maxSensorRate.set("0")
@@ -642,6 +654,8 @@ class guiDCM:
             self.atrialPulesWidth.set("0")
             self.arp.set("0")
             self.pvarp.set("0")
+            self.atrialSens.set("0")
+            self.ventricalSens.set("0")
         
         self.patientData = {}
         
