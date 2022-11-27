@@ -302,9 +302,6 @@ class guiDCM:
             self.mainScreenHeader.columnconfigure(0, weight = 1)
             self.appendNewScreen("profileScreen", self.mainScreenHeader)
 
-            self.signOut = ttk.Button(self.mainScreenHeader, text = "Sign Out", command = lambda:self.patientOut())
-            self.signOut.grid(row = 0, sticky = E)
-
             # calling visible screen in order to display the screen at top
             self.visibleScreen("profileScreen", "top")
             return True
@@ -476,6 +473,8 @@ class guiDCM:
             # creating the confirm button for the user
             self.confirmButton = ttk.Button(self.paitentDataEntry, text = "Confirm", command = lambda:self.writePatientData(self.currentUsername))
             self.confirmButton.grid(row = 10, column = 5, padx = 5, sticky = E)
+            self.signOut = ttk.Button(self.paitentDataEntry, text = "Sign Out", command = lambda:self.patientOut())
+            self.signOut.grid(row = 10, sticky = W)
 
             # this will display the user data that is stored
             self.readPatientData(self.currentUsername)
