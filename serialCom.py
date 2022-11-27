@@ -88,11 +88,11 @@ with open(userFilepath+patientDataFile, "r") as iFile:
     #print (type(Start),type(Fn_set),type(lrl), type(url), type(vamp), type(aamp), type(vpw), type(apw), type(vsen), type(asen), type(arp), type(vrp), type(msr), type(at), type(rt), type(res), type(rct))
 
 if (endian_checker() == True):
-    Signal_set = struct.pack("<ccBBffffffHHBBBBB",Start, Fn_set, lrl, url, vamp, aamp, vpw, apw, vsen, asen, arp, vrp, msr, at, rt, res, rct) 
-    Signal_echo = struct.pack("<ccBBffffffHHBBBBB",Start, SYNC, lrl, url, vamp, aamp, vpw, apw, vsen, asen, arp, vrp, msr, at, rt, res, rct)
+    Signal_set = struct.pack("<ccBBBffffffHHBBBBB",Start, Fn_set, mode, lrl, url, vamp, aamp, vpw, apw, vsen, asen, arp, vrp, msr, at, rt, res, rct) 
+    Signal_echo = struct.pack("<ccBBBffffffHHBBBBB",Start, SYNC, mode, lrl, url, vamp, aamp, vpw, apw, vsen, asen, arp, vrp, msr, at, rt, res, rct)
 else:
-    Signal_set = struct.pack(">ccBBffffffHHBBBBB",Start, Fn_set, lrl, url, vamp, aamp, vpw, apw, vsen, asen, arp, vrp, msr, at, rt, res, rct) 
-    Signal_echo = struct.pack(">ccBBffffffHHBBBBB",Start, SYNC, lrl, url, vamp, aamp, vpw, apw, vsen, asen, arp, vrp, msr, at, rt, res, rct)
+    Signal_set = struct.pack(">ccBBBffffffHHBBBBB",Start, Fn_set, mode, lrl, url, vamp, aamp, vpw, apw, vsen, asen, arp, vrp, msr, at, rt, res, rct) 
+    Signal_echo = struct.pack(">ccBBBffffffHHBBBBB",Start, SYNC, mode, lrl, url, vamp, aamp, vpw, apw, vsen, asen, arp, vrp, msr, at, rt, res, rct)
 
 
 print (Signal_set)
@@ -104,11 +104,9 @@ print("From the board:")
 with serial.Serial(COMPORT, 115200) as pacemaker:
     pacemaker.write(Signal_echo)
     t.sleep(2)
-    data = pacemaker.read(6)
+    data = pacemaker.read(34)
+    print("HI")
     test0 = data[0]
-    testfloat =  struct.unpack("f", data[1:5])[0]
-    test1 = data[5]
 
     print("first: ",test0)     #69
-    print("first: ",testfloat) #4.20
-    print("first: ",test1)     #21
+
