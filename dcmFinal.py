@@ -475,7 +475,7 @@ class guiDCM:
 
             # creating the confirm button for the user
             self.confirmButton = ttk.Button(self.paitentDataEntry, text = "Confirm", command = lambda:self.writePatientData(self.currentUsername))
-            self.confirmButton.grid(row = 11, column = 5, padx = 5, sticky = E)
+            self.confirmButton.grid(row = 10, column = 5, padx = 5, sticky = E)
 
             # this will display the user data that is stored
             self.readPatientData(self.currentUsername)
@@ -518,6 +518,8 @@ class guiDCM:
                 self.reactionTime.set(self.patientData["value14"])
                 self.responseTime.set(self.patientData["value15"])
                 self.recoveryTime.set(self.patientData["value16"])
+                self.atrialSens.set(self.patientData["value17"])
+                self.ventricalSens.set(self.patientData["value18"])
                 
         # if unsuccessful, then the values will be set to an empty string
         except:
@@ -565,6 +567,8 @@ class guiDCM:
             self.reactionTime.set("")
             self.responseTime.set("")
             self.recoveryTime.set("")
+            self.atrialSens.set("")
+            self.ventricalSens.set("")
         
         if (chosenMode.get() == "VOO"):
             self.maxSensorRate.set("")
@@ -579,6 +583,8 @@ class guiDCM:
             self.reactionTime.set("")
             self.responseTime.set("")
             self.recoveryTime.set("")
+            self.atrialSens.set("")
+            self.ventricalSens.set("")
 
         if (chosenMode.get() == "AAI"):
             self.maxSensorRate.set("")
@@ -610,6 +616,8 @@ class guiDCM:
             self.pvarp.set("")
             self.hystersis.set("")
             self.rateSmoothing.set("")
+            self.atrialSens.set("")
+            self.ventricalSens.set("")
 
         if (chosenMode.get() == "VOOR"):
             self.maxSensorRate.set("")
@@ -620,6 +628,8 @@ class guiDCM:
             self.pvarp.set("")
             self.hystersis.set("")
             self.rateSmoothing.set("")
+            self.atrialSens.set("")
+            self.ventricalSens.set("")
 
         if (chosenMode.get() == "AAIR"):
             self.ventricalAmp.set("")
@@ -656,6 +666,8 @@ class guiDCM:
             self.patientData["value14"] = self.reactionTime.get()
             self.patientData["value15"] = self.responseTime.get()
             self.patientData["value16"] = self.recoveryTime.get()
+            self.patientData["value17"] = self.atrialSens.get()
+            self.patientData["value18"] = self.ventricalSens.get()
             # send the data to the file, AKA dump = writing data
             json.dump(self.patientData, oFile)
     
