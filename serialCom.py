@@ -9,76 +9,91 @@ import serial.tools.list_ports
 import struct
 import time as t
 import json
-import string
+import sys
+
 
 COMPORT = 'COM4' #change me to the correct COM port
 Start = b'\x16'
 SYNC = b'\x22'
 Fn_set = b'\x55'
 
+    
+global mode,lrl,url,msr,aamp,apw,vamp,vpw,vrp,arp,pvarp,hys,rs,at,rt,res,rct,asen,vsen,signal_set,Signal_echo
+username = "jibin"
+userFilepath = "./user"
+patientDatabase = "/database.json"
+patientDataFile = "/"+username+".json"
+patientData = {}
 
-def readPatientData(self, username):
-     self.patientDataFile = "/"+username+".json"
-     self.patientData = {}
-     with open(self.userFilepath+self.patientDataFile, "r") as iFile:
-        # loading the user file date
-        self.patientData = json.load(iFile)
+def endian_checker():
+    if sys.byteorder == "little":
+        return True
+    else:
+        return False
 
-        global mode, lrl,url,msr,aamp,apw,vamp,vpw,vrp,arp,pvarp,hys,rs,at,rt,res,rct
+with open(userFilepath+patientDataFile, "r") as iFile:
+    # loading the user file date
+    patientData = json.load(iFile)
+    if (patientData["pacingMode"] == "AOO"):
+        mode = 1
+    elif (patientData["pacingMode"] == "VOO"):
+        mode = 2
+    elif (patientData["pacingMode"] == "AAI"):
+        mode = 3
+    elif (patientData["pacingMode"] == "VVI"):
+        mode = 4
+    elif (patientData["pacingMode"] == "AOOR"):
+        mode = 5
+    elif (patientData["pacingMode"] == "VOOR"):
+        mode = 6
+    elif (patientData["pacingMode"] == "AAIR"):
+        mode = 7
+    elif (patientData["pacingMode"] == "VVIR"):
+        mode = 8
 
-        if (self.patientData["pacingMode"] == "AOO"):
-            mode = struct.pack("B",1)
-        elif (self.patientData["pacingMode"] == "VOO"):
-            mode = struct.pack("B",2)
-        elif (self.patientData["pacingMode"] == "AAI"):
-            mode = struct.pack("B",3)
-        elif (self.patientData["pacingMode"] == "VVI"):
-            mode = struct.pack("B",4)
-        elif (self.patientData["pacingMode"] == "AOOR"):
-            mode = struct.pack("B",5)
-        elif (self.patientData["pacingMode"] == "VOOR"):
-            mode = struct.pack("B",6)
-        elif (self.patientData["pacingMode"] == "AAIR"):
-            mode = struct.pack("B",7)
-        elif (self.patientData["pacingMode"] == "VVIR"):
-            mode = struct.pack("B",8)
+    lrl = int(patientData["value1"])
+    url = int(patientData["value2"])
+    msr = int(patientData["value3"])
+    aamp = float(patientData["value4"])
+    apw = float(patientData["value5"])
+    vamp = float(patientData["value6"])
+    vpw = float(patientData["value7"])
+    vrp = int(patientData["value8"])
+    arp = int(patientData["value9"])
+    pvarp = int(patientData["value10"])
+    hys = int(patientData["value11"])
+    rs = int(patientData["value12"])
 
-        lrl = struct.pack("B",int(self.patientData["value1"]))
-        url = struct.pack("B",int(self.patientData["value2"]))
-        msr = struct.pack("B",int(self.patientData["value3"]))
-        aamp = struct.pack("f",float(self.patientData["value4"]))
-        apw = struct.pack("f",float(self.patientData["value5"]))
-        vamp = struct.pack("f",float(self.patientData["value6"]))
-        vpw = struct.pack("f",float(self.patientData["value7"]))
-        vrp = struct.pack("B",int(self.patientData["value8"]))
-        arp = struct.pack("B",int(self.patientData["value9"]))
-        pvarp = struct.pack("B",int(self.patientData["value10"]))
-        hys = struct.pack("B",int(self.patientData["value11"]))
-        rs = struct.pack("B",int(self.patientData["value12"]))
+    if ((patientData["value13"]) == "V-Low"):
+        at = 1 #Very Low activity
+    elif (((patientData["value13"]) == "Low")):
+        at = 2 #Low Activity
+    elif ((patientData["value13"]) == "Med-Low"):
+        at = 3 #Med-Low Activity
+    elif ((patientData["value13"]) == "Med"):
+        at = 4 #Med Activity
+    elif ((patientData["value13"]) == "Med-High"):
+        at = 5 #Med-High Activity
+    elif ((patientData["value13"]) == "High"):
+        at = 6 #High Activity
+    elif ((patientData["value13"]) == "V-High"):
+        at = 7 #Very High Activity
 
-        if ((self.patientData["value13"]) == "V-Low"):
-            at = struct.pack("B",1) #Very Low activity
-        elif (((self.patientData["value13"]) == "Low")):
-            at = struct.pack("B",2) #Low Activity
-        elif ((self.patientData["value13"]) == "Med-Low"):
-            at = struct.pack("B",3) #Med-Low Activity
-        elif ((self.patientData["value13"]) == "Med"):
-            at = struct.pack("B",4) #Med Activity
-        elif ((self.patientData["value13"]) == "Med-High"):
-            at = struct.pack("B",5) #Med-High Activity
-        elif ((self.patientData["value13"]) == "High"):
-            at = struct.pack("B",6) #High Activity
-        elif ((self.patientData["value13"]) == "V-High"):
-            at = struct.pack("B",7) #Very High Activity
+    rt = int(patientData["value14"])
+    res = int(patientData["value15"])
+    rct = int(patientData["value16"])
+    asen = float(patientData["value17"])
+    vsen = float(patientData["value18"])
 
-        rt = struct.pack("B",int(self.patientData["value14"]))
-        res = struct.pack("B",int(self.patientData["value15"]))
-        rct = struct.pack("B",int(self.patientData["value16"]))
+if (endian_checker() == True):
+    Signal_set = struct.pack("<ccBBFFFFFFHHBBBBB",Start, Fn_set, lrl, url, vamp, aamp, vpw, apw, vsen, asen, arp, vrp, msr, at, rt, res, rct) 
+    Signal_echo = struct.pack("<ccBBFFFFFFHHBBBBB",Start, Fn_set, lrl, url, vamp, aamp, vpw, apw, vsen, asen, arp, vrp, msr, at, rt, res, rct)
+else:
+    Signal_set = struct.pack(">ccBBFFFFFFHHBBBBB",Start, Fn_set, lrl, url, vamp, aamp, vpw, apw, vsen, asen, arp, vrp, msr, at, rt, res, rct) 
+    Signal_echo = struct.pack(">ccBBFFFFFFHHBBBBB",Start, Fn_set, lrl, url, vamp, aamp, vpw, apw, vsen, asen, arp, vrp, msr, at, rt, res, rct)
 
 
-Signal_set = Start + Fn_set + lrl + url + vamp + aamp + vpw + apw*26
-Signal_echo = Start + SYNC + lrl + url*26
-
+print (Signal_set)
 with serial.Serial(COMPORT, 115200) as pacemaker:
     pacemaker.write(Signal_set)
     t.sleep(2)
