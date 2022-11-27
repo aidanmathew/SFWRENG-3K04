@@ -254,11 +254,14 @@ class guiDCM:
         else:
             messagebox.showerror("Login Unsuccessful", "The username or the password is not correct.")
 
-    xar = [0, 0.1]
+    xar = [0, 0]
     yar = [0, 0]
+    xar1 = [0, 0]
+    yar1 = [0, 0]
 
     pulseplot = False
 
+    # changes the button state
     def change_state(self):
         if guiDCM.pulseplot == True:
             guiDCM.pulseplot = False
@@ -270,8 +273,9 @@ class guiDCM:
                 self.fig = plt.Figure()
                 self.ax = self.fig.add_subplot(211)
                 self.ax.grid()
-                self.line, = self.ax.plot(guiDCM.xar,guiDCM.yar)
-                self.ax.set_ylim(-1, 1) 
+                self.line, = self.ax.plot(guiDCM.xar, guiDCM.yar)
+                self.line2, = self.ax.plot(guiDCM.xar1,guiDCM.yar1)
+                self.ax.set_ylim(0, 5) 
                 self.graph = FigureCanvasTkAgg(self.fig, master=self.egramGraph)
                 self.graph.get_tk_widget().pack(side=BOTTOM, fill=X)
 
@@ -279,12 +283,16 @@ class guiDCM:
                 self.stopstartButton.pack(side=TOP)
                 self.graph.draw()
 
+    # if the pulseplot is true
     def refresh(self):
         if guiDCM.pulseplot == True:
             guiDCM.xar = np.append(guiDCM.xar, guiDCM.xar[-1]+0.1)
             guiDCM.yar = np.append(guiDCM.yar, np.sin(guiDCM.xar[-1]))
+            guiDCM.xar1 = np.append(guiDCM.xar1, guiDCM.xar1[-1]+0.1)
+            guiDCM.yar1 = np.append(guiDCM.yar1, np.cos(guiDCM.xar1[-1]))
             self.ax.set_xlim(guiDCM.xar[-1]-10, guiDCM.xar[-1])
-            self.line.set_data(guiDCM.xar,guiDCM.yar)       
+            self.line.set_data(guiDCM.xar,guiDCM.yar)
+            self.line2.set_data(guiDCM.xar1,guiDCM.yar1)       
             self.graph.draw()
             self.root.after(10, self.refresh)
 
