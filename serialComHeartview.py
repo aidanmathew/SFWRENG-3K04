@@ -116,7 +116,7 @@ Signal_set = Start+Fn_set+mode+lrl+url+vamp+aamp+vpw+apw+vsen+asen+arp+vrp+msr+a
 Signal_echo = Start+SYNC+mode+lrl+url+vamp+aamp+vpw+apw+vsen+asen+arp+vrp+msr+at+res+rt+rct
 
 print ("_____________")
-print (Signal_set)
+print (Signal_set[3])
 print ("_____________")
 print (Signal_echo)
 print ("_____________")
