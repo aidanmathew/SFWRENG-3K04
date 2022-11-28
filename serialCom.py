@@ -267,24 +267,23 @@ with serial.Serial(COMPORT, 115200) as pacemaker:
     rt2 = data[31]
     rct2 = data[32]
 
-print(data[0])
 
-print("Mode = ", str(mode2))
-print("Low Rate Limit = ", str(lrl2))
-print("Upper Rate Limit = ", str(url2))
-print("V-Amp = ", str(vamp2))
-print("A-Amp = ", str(aamp2))
-print("VPW = ", str(vpw2))
-print("APW = ", str(apw2))
-print("V-Sen = ", str(vsen2))
-print("A-Sen = ", str(asen2))
-print("ARP = ", str(arp2))
-print("VRP = ", str(vrp2))
-print("MSR = ", str(msr2))
-print("Activty Threshold = ", str(at2))
-print("Reaction Time = ", str(rt2))
-print("Response Time = ", str(res2))
-print("Recovery Time = ", str(rct2))
+print("Mode = ", mode2)
+print("Low Rate Limit = ", lrl2)
+print("Upper Rate Limit = ", url2)
+print("V-Amp = ", vamp2)
+print("A-Amp = ", aamp2)
+print("VPW = ", vpw2)
+print("APW = ", apw2)
+print("V-Sen = ", vsen2)
+print("A-Sen = ", asen2)
+print("ARP = ", arp2)
+print("VRP = ", vrp2)
+print("MSR = ", msr2)
+print("Activty Threshold = ", at2)
+print("Reaction Time = ", rt2)
+print("Response Time = ", res2)
+print("Recovery Time = ", rct2)
 
 
 
