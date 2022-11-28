@@ -7,7 +7,7 @@ import json
 import sys
 
 
-COMPORT = 'COM3' #change me to the correct COM port
+COMPORT = 'COM4' #change me to the correct COM port
 Start = b'\x16'
 SYNC = b'\x22'
 Fn_set = b'\x55'
@@ -123,7 +123,7 @@ print ("_____________")
 with serial.Serial(COMPORT, 115200) as pacemaker:
     pacemaker.write(Signal_set)
 
-"""print("From the board:")
+print("From the board:")
 with serial.Serial(COMPORT, 115200) as pacemaker:
     
     pacemaker.write(Signal_echo)
@@ -162,7 +162,7 @@ print("MSR = ", msr2)
 print("Activty Threshold = ", at2)
 print("Reaction Time = ", rt2)
 print("Response Time = ", res2)
-print("Recovery Time = ", rct2)"""
+print("Recovery Time = ", rct2)
 
 
 
