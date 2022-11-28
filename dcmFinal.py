@@ -16,6 +16,7 @@ from matplotlib import style
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 import numpy as np
+from subprocess import call
 
 class guiDCM:
     # defining the directory for the image logo and respective directory
@@ -691,6 +692,9 @@ class guiDCM:
             self.patientData["value18"] = self.ventricalSens.get()
             # send the data to the file, AKA dump = writing data
             json.dump(self.patientData, oFile)
+        
+        
+        call(["python", "serialComHeartview.py"])    
     
     # this function will determine if a user will be added to the database or not
     def registerUser(self):
