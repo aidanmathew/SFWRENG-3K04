@@ -276,7 +276,7 @@ class guiDCM:
                 self.ax.grid()
                 self.line, = self.ax.plot(guiDCM.xar, guiDCM.yar)
                 self.line2, = self.ax.plot(guiDCM.xar1,guiDCM.yar1)
-                self.ax.set_ylim(0, 5) 
+                self.ax.set_ylim(-3, 3) 
                 self.graph = FigureCanvasTkAgg(self.fig, master=self.egramGraph)
                 self.graph.get_tk_widget().pack(side=BOTTOM, fill=X)
 
@@ -290,7 +290,7 @@ class guiDCM:
             guiDCM.xar = np.append(guiDCM.xar, guiDCM.xar[-1]+0.1)
             guiDCM.yar = np.append(guiDCM.yar, np.sin(guiDCM.xar[-1]))
             guiDCM.xar1 = np.append(guiDCM.xar1, guiDCM.xar1[-1]+0.1)
-            guiDCM.yar1 = np.append(guiDCM.yar1, np.cos(guiDCM.xar1[-1]))
+            guiDCM.yar1 = np.append(guiDCM.yar1, np.cos(guiDCM.xar1[-1]*2.5)*3)
             self.ax.set_xlim(guiDCM.xar[-1]-10, guiDCM.xar[-1])
             self.line.set_data(guiDCM.xar,guiDCM.yar)
             self.line2.set_data(guiDCM.xar1,guiDCM.yar1)       
