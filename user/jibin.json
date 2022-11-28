@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-{"pacingMode": "VOO", "value1": "175", "value2": "175", "value3": "0", "value4": "0", "value5": "0", "value6": "3.3", "value7": "1.9", "value8": "0", "value9": "0", "value10": "0", "value11": "0", "value12": "0", "value13": "0", "value14": "0", "value15": "0", "value16": "0", "value17": "0", "value18": "0"}
-=======
-{"pacingMode": "VOO", "value1": "150", "value2": "170", "value3": "0", "value4": "0", "value5": "0", "value6": "3.3", "value7": "1.9", "value8": "0", "value9": "0", "value10": "0", "value11": "0", "value12": "0", "value13": "0", "value14": "0", "value15": "0", "value16": "0", "value17": "0", "value18": "0"}
->>>>>>> 19e79057754d49288a5a7193a6ba5b965e6aee08
+{"pacingMode": "AOO", "value1": "53", "value2": "75", "value3": "0", "value4": "1.25", "value5": "1.4", "value6": "0", "value7": "0", "value8": "0", "value9": "0", "value10": "0", "value11": "0", "value12": "0", "value13": "0", "value14": "0", "value15": "0", "value16": "0", "value17": "0", "value18": "0"}

@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'Final_Simulink_Model_assignment_2'.
  *
- * Model version                  : 2.133
+ * Model version                  : 2.134
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Sun Nov 27 18:36:21 2022
+ * C/C++ source code generated on : Sun Nov 27 20:58:58 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -81,24 +81,26 @@ RT_MODEL_Final_Simulink_Model_T *const Final_Simulink_Model_assignm_M =
   &Final_Simulink_Model_assignm_M_;
 
 /* Forward declaration for local functions */
-static void Final_Simulink_M_VVI_REFRACTORY(boolean_T *PACE_GND_CTRL, boolean_T *
-  PACE_CHARGE_CTRL);
 static void Final_Simulink_Model_assign_AAI(boolean_T *PACE_GND_CTRL, boolean_T *
   PACE_CHARGE_CTRL, const boolean_T *ATR_CMP_DETECT);
 static void Final_Simulink_Model_assig_AAIR(boolean_T *PACE_GND_CTRL, boolean_T *
   PACE_CHARGE_CTRL, const boolean_T *ATR_CMP_DETECT);
-static void Final_Simulink__AAIR_REFRACTORY(boolean_T *PACE_GND_CTRL, boolean_T *
-  PACE_CHARGE_CTRL);
 static void Final_Simulink_M_AAI_REFRACTORY(boolean_T *PACE_GND_CTRL, boolean_T *
   PACE_CHARGE_CTRL);
+static void Final_Simulink_Model_assign_AOO(boolean_T *PACE_GND_CTRL, boolean_T *
+  PACE_CHARGE_CTRL);
+static void Final_Simulink_Model_assig_AOOR(boolean_T *PACE_GND_CTRL, boolean_T *
+  PACE_CHARGE_CTRL);
 static void Final_Simulink_Model_assig_MAIN(boolean_T *PACE_GND_CTRL, boolean_T *
+  PACE_CHARGE_CTRL);
+static void Final_Simulink_Model_assign_VOO(boolean_T *PACE_GND_CTRL, boolean_T *
+  PACE_CHARGE_CTRL);
+static void Final_Simulink_Model_assig_VOOR(boolean_T *PACE_GND_CTRL, boolean_T *
   PACE_CHARGE_CTRL);
 static void Final_Simulink_Model_assign_VVI(boolean_T *PACE_GND_CTRL, boolean_T *
   PACE_CHARGE_CTRL, const boolean_T *VENT_CMP_DETECT);
 static void Final_Simulink_Model_assig_VVIR(boolean_T *PACE_GND_CTRL, boolean_T *
   PACE_CHARGE_CTRL, const boolean_T *VENT_CMP_DETECT);
-static void Final_Simulink__VVIR_REFRACTORY(boolean_T *PACE_GND_CTRL, boolean_T *
-  PACE_CHARGE_CTRL);
 static void Final_Simu_SystemCore_setup_mmp(freedomk64f_SCIRead_Final_Sim_T *obj);
 static void Final_Simuli_SystemCore_setup_m(freedomk64f_fxos8700_Final_Si_T *obj);
 static void Final_Simul_SystemCore_setup_mm(dsp_simulink_MovingStandardDe_T *obj);
@@ -134,30 +136,6 @@ static void rate_monotonic_scheduler(void)
   (Final_Simulink_Model_assignm_M->Timing.TaskCounters.TID[1])++;
   if ((Final_Simulink_Model_assignm_M->Timing.TaskCounters.TID[1]) > 9) {/* Sample time: [0.01s, 0.0s] */
     Final_Simulink_Model_assignm_M->Timing.TaskCounters.TID[1] = 0;
-  }
-}
-
-/* Function for Chart: '<Root>/Chart1' */
-static void Final_Simulink_M_VVI_REFRACTORY(boolean_T *PACE_GND_CTRL, boolean_T *
-  PACE_CHARGE_CTRL)
-{
-  Final_Simulink_Model_assignme_B.FRONTEND_CTRL = false;
-  Final_Simulink_Model_assignme_B.VENT_GND_CTRL = true;
-  *PACE_CHARGE_CTRL = false;
-  *PACE_GND_CTRL = true;
-  if ((uint32_T)((int32_T)Final_Simulink_Model_assignm_DW.temporalCounter_i1 *
-                 10) >= Final_Simulink_Model_assignme_B.VRP_o) {
-    Final_Simulink_Model_assignm_DW.is_c7_Final_Simulink_Model_assi =
-      Final_Simulink_Model_ass_IN_VVI;
-    Final_Simulink_Model_assignm_DW.temporalCounter_i1 = 0U;
-    Final_Simulink_Model_assignme_B.FRONTEND_CTRL = true;
-    Final_Simulink_Model_assignme_B.VENT_PACE_CTRL = false;
-    *PACE_CHARGE_CTRL = true;
-    *PACE_GND_CTRL = true;
-    Final_Simulink_Model_assignme_B.PACING_REF_PWM = 20.0F *
-      Final_Simulink_Model_assignme_B.VENT_Amplitude_a;
-    Final_Simulink_Model_assignme_B.VENT_CMP_REF_PWM = 20.0F *
-      Final_Simulink_Model_assignme_B.VENTSENSITIVITY_Amplitude_l;
   }
 }
 
@@ -219,6 +197,17 @@ static void Final_Simulink_Model_assign_AAI(boolean_T *PACE_GND_CTRL, boolean_T 
       Final_Simulink_Model_assignme_B.ATR_Amplitude_m;
     *PACE_CHARGE_CTRL = false;
     *PACE_GND_CTRL = true;
+  } else if (Final_Simulink_Model_assignme_B.mode != 3) {
+    Final_Simulink_Model_assignm_DW.is_c7_Final_Simulink_Model_assi =
+      Final_Simulink_Model_as_IN_MAIN;
+    Final_Simulink_Model_assignme_B.VENT_GND_CTRL = false;
+    Final_Simulink_Model_assignme_B.Z_ATR_CTRL = false;
+    Final_Simulink_Model_assignme_B.Z_VENT_CTRL = false;
+    Final_Simulink_Model_assignme_B.FRONTEND_CTRL = false;
+    *PACE_CHARGE_CTRL = false;
+    Final_Simulink_Model_assignme_B.VENT_PACE_CTRL = false;
+    *PACE_GND_CTRL = false;
+    Final_Simulink_Model_assignme_B.ATR_GND_CTRL = false;
   }
 }
 
@@ -280,30 +269,17 @@ static void Final_Simulink_Model_assig_AAIR(boolean_T *PACE_GND_CTRL, boolean_T 
       Final_Simulink_Model_assignme_B.ATR_Amplitude_m;
     *PACE_CHARGE_CTRL = false;
     *PACE_GND_CTRL = true;
-  }
-}
-
-/* Function for Chart: '<Root>/Chart1' */
-static void Final_Simulink__AAIR_REFRACTORY(boolean_T *PACE_GND_CTRL, boolean_T *
-  PACE_CHARGE_CTRL)
-{
-  Final_Simulink_Model_assignme_B.FRONTEND_CTRL = false;
-  Final_Simulink_Model_assignme_B.ATR_PACE_CTRL = false;
-  Final_Simulink_Model_assignme_B.ATR_GND_CTRL = true;
-  *PACE_CHARGE_CTRL = false;
-  *PACE_GND_CTRL = true;
-  if ((uint32_T)((int32_T)Final_Simulink_Model_assignm_DW.temporalCounter_i1 *
-                 10) >= Final_Simulink_Model_assignme_B.ARP_l) {
+  } else if (Final_Simulink_Model_assignme_B.mode != 7) {
     Final_Simulink_Model_assignm_DW.is_c7_Final_Simulink_Model_assi =
-      Final_Simulink_Model_as_IN_AAIR;
-    Final_Simulink_Model_assignm_DW.temporalCounter_i1 = 0U;
-    Final_Simulink_Model_assignme_B.FRONTEND_CTRL = true;
-    *PACE_CHARGE_CTRL = true;
-    *PACE_GND_CTRL = true;
-    Final_Simulink_Model_assignme_B.PACING_REF_PWM = 20.0F *
-      Final_Simulink_Model_assignme_B.ATR_Amplitude_m;
-    Final_Simulink_Model_assignme_B.ATR_CMP_REF_PWM = 20.0F *
-      Final_Simulink_Model_assignme_B.ATRSENSITIVITY_Amplitude_p;
+      Final_Simulink_Model_as_IN_MAIN;
+    Final_Simulink_Model_assignme_B.VENT_GND_CTRL = false;
+    Final_Simulink_Model_assignme_B.Z_ATR_CTRL = false;
+    Final_Simulink_Model_assignme_B.Z_VENT_CTRL = false;
+    Final_Simulink_Model_assignme_B.FRONTEND_CTRL = false;
+    *PACE_CHARGE_CTRL = false;
+    Final_Simulink_Model_assignme_B.VENT_PACE_CTRL = false;
+    *PACE_GND_CTRL = false;
+    Final_Simulink_Model_assignme_B.ATR_GND_CTRL = false;
   }
 }
 
@@ -328,6 +304,100 @@ static void Final_Simulink_M_AAI_REFRACTORY(boolean_T *PACE_GND_CTRL, boolean_T 
       Final_Simulink_Model_assignme_B.ATR_Amplitude_m;
     Final_Simulink_Model_assignme_B.ATR_CMP_REF_PWM = 20.0F *
       Final_Simulink_Model_assignme_B.ATRSENSITIVITY_Amplitude_p;
+  }
+}
+
+/* Function for Chart: '<Root>/Chart1' */
+static void Final_Simulink_Model_assign_AOO(boolean_T *PACE_GND_CTRL, boolean_T *
+  PACE_CHARGE_CTRL)
+{
+  real_T tmp_0;
+  uint32_T qY;
+  uint8_T tmp;
+  Final_Simulink_Model_assignme_B.ATR_PACE_CTRL = false;
+  *PACE_CHARGE_CTRL = true;
+  Final_Simulink_Model_assignme_B.ATR_GND_CTRL = true;
+  *PACE_GND_CTRL = true;
+  tmp_0 = rt_roundd_snf(60000.0 / (real_T)Final_Simulink_Model_assignme_B.LRL);
+  if (tmp_0 < 256.0) {
+    tmp = (uint8_T)tmp_0;
+  } else {
+    tmp = MAX_uint8_T;
+  }
+
+  qY = (uint32_T)tmp - /*MW:OvSatOk*/
+    Final_Simulink_Model_assignme_B.ATR_PULSE_WIDTH;
+  if (qY > tmp) {
+    qY = 0U;
+  }
+
+  if ((uint32_T)((int32_T)Final_Simulink_Model_assignm_DW.temporalCounter_i1 *
+                 10) >= qY) {
+    Final_Simulink_Model_assignm_DW.is_c7_Final_Simulink_Model_assi =
+      Final_Simulink_Mo_IN_Pacing_AOO;
+    Final_Simulink_Model_assignm_DW.temporalCounter_i1 = 0U;
+    *PACE_CHARGE_CTRL = false;
+    *PACE_GND_CTRL = true;
+    Final_Simulink_Model_assignme_B.ATR_PACE_CTRL = true;
+    Final_Simulink_Model_assignme_B.ATR_GND_CTRL = false;
+  } else if (Final_Simulink_Model_assignme_B.mode != 1) {
+    Final_Simulink_Model_assignm_DW.is_c7_Final_Simulink_Model_assi =
+      Final_Simulink_Model_as_IN_MAIN;
+    Final_Simulink_Model_assignme_B.VENT_GND_CTRL = false;
+    Final_Simulink_Model_assignme_B.Z_ATR_CTRL = false;
+    Final_Simulink_Model_assignme_B.Z_VENT_CTRL = false;
+    Final_Simulink_Model_assignme_B.FRONTEND_CTRL = false;
+    *PACE_CHARGE_CTRL = false;
+    Final_Simulink_Model_assignme_B.VENT_PACE_CTRL = false;
+    *PACE_GND_CTRL = false;
+    Final_Simulink_Model_assignme_B.ATR_GND_CTRL = false;
+  }
+}
+
+/* Function for Chart: '<Root>/Chart1' */
+static void Final_Simulink_Model_assig_AOOR(boolean_T *PACE_GND_CTRL, boolean_T *
+  PACE_CHARGE_CTRL)
+{
+  real_T tmp_0;
+  uint32_T qY;
+  uint8_T tmp;
+  Final_Simulink_Model_assignme_B.ATR_PACE_CTRL = false;
+  *PACE_CHARGE_CTRL = true;
+  Final_Simulink_Model_assignme_B.ATR_GND_CTRL = true;
+  *PACE_GND_CTRL = true;
+  tmp_0 = rt_roundd_snf(60000.0 / (real_T)Final_Simulink_Model_assignme_B.rate);
+  if (tmp_0 < 256.0) {
+    tmp = (uint8_T)tmp_0;
+  } else {
+    tmp = MAX_uint8_T;
+  }
+
+  qY = (uint32_T)tmp - /*MW:OvSatOk*/
+    Final_Simulink_Model_assignme_B.ATR_PULSE_WIDTH;
+  if (qY > tmp) {
+    qY = 0U;
+  }
+
+  if ((uint32_T)((int32_T)Final_Simulink_Model_assignm_DW.temporalCounter_i1 *
+                 10) >= qY) {
+    Final_Simulink_Model_assignm_DW.is_c7_Final_Simulink_Model_assi =
+      Final_Simulink_M_IN_Pacing_AOOR;
+    Final_Simulink_Model_assignm_DW.temporalCounter_i1 = 0U;
+    *PACE_CHARGE_CTRL = false;
+    *PACE_GND_CTRL = true;
+    Final_Simulink_Model_assignme_B.ATR_PACE_CTRL = true;
+    Final_Simulink_Model_assignme_B.ATR_GND_CTRL = false;
+  } else if (Final_Simulink_Model_assignme_B.mode != 5) {
+    Final_Simulink_Model_assignm_DW.is_c7_Final_Simulink_Model_assi =
+      Final_Simulink_Model_as_IN_MAIN;
+    Final_Simulink_Model_assignme_B.VENT_GND_CTRL = false;
+    Final_Simulink_Model_assignme_B.Z_ATR_CTRL = false;
+    Final_Simulink_Model_assignme_B.Z_VENT_CTRL = false;
+    Final_Simulink_Model_assignme_B.FRONTEND_CTRL = false;
+    *PACE_CHARGE_CTRL = false;
+    Final_Simulink_Model_assignme_B.VENT_PACE_CTRL = false;
+    *PACE_GND_CTRL = false;
+    Final_Simulink_Model_assignme_B.ATR_GND_CTRL = false;
   }
 }
 
@@ -448,6 +518,100 @@ static void Final_Simulink_Model_assig_MAIN(boolean_T *PACE_GND_CTRL, boolean_T 
 }
 
 /* Function for Chart: '<Root>/Chart1' */
+static void Final_Simulink_Model_assign_VOO(boolean_T *PACE_GND_CTRL, boolean_T *
+  PACE_CHARGE_CTRL)
+{
+  real_T tmp_0;
+  uint32_T qY;
+  uint8_T tmp;
+  Final_Simulink_Model_assignme_B.VENT_PACE_CTRL = false;
+  *PACE_CHARGE_CTRL = true;
+  Final_Simulink_Model_assignme_B.VENT_GND_CTRL = true;
+  *PACE_GND_CTRL = true;
+  tmp_0 = rt_roundd_snf(60000.0 / (real_T)Final_Simulink_Model_assignme_B.LRL);
+  if (tmp_0 < 256.0) {
+    tmp = (uint8_T)tmp_0;
+  } else {
+    tmp = MAX_uint8_T;
+  }
+
+  qY = (uint32_T)tmp - /*MW:OvSatOk*/
+    Final_Simulink_Model_assignme_B.VENT_PULSE_WIDTH;
+  if (qY > tmp) {
+    qY = 0U;
+  }
+
+  if ((uint32_T)((int32_T)Final_Simulink_Model_assignm_DW.temporalCounter_i1 *
+                 10) >= qY) {
+    Final_Simulink_Model_assignm_DW.is_c7_Final_Simulink_Model_assi =
+      Final_Simulink_Mo_IN_Pacing_VOO;
+    Final_Simulink_Model_assignm_DW.temporalCounter_i1 = 0U;
+    *PACE_CHARGE_CTRL = false;
+    *PACE_GND_CTRL = true;
+    Final_Simulink_Model_assignme_B.VENT_GND_CTRL = false;
+    Final_Simulink_Model_assignme_B.VENT_PACE_CTRL = true;
+  } else if (Final_Simulink_Model_assignme_B.mode != 2) {
+    Final_Simulink_Model_assignm_DW.is_c7_Final_Simulink_Model_assi =
+      Final_Simulink_Model_as_IN_MAIN;
+    Final_Simulink_Model_assignme_B.VENT_GND_CTRL = false;
+    Final_Simulink_Model_assignme_B.Z_ATR_CTRL = false;
+    Final_Simulink_Model_assignme_B.Z_VENT_CTRL = false;
+    Final_Simulink_Model_assignme_B.FRONTEND_CTRL = false;
+    *PACE_CHARGE_CTRL = false;
+    Final_Simulink_Model_assignme_B.ATR_PACE_CTRL = false;
+    *PACE_GND_CTRL = false;
+    Final_Simulink_Model_assignme_B.ATR_GND_CTRL = false;
+  }
+}
+
+/* Function for Chart: '<Root>/Chart1' */
+static void Final_Simulink_Model_assig_VOOR(boolean_T *PACE_GND_CTRL, boolean_T *
+  PACE_CHARGE_CTRL)
+{
+  real_T tmp_0;
+  uint32_T qY;
+  uint8_T tmp;
+  Final_Simulink_Model_assignme_B.VENT_PACE_CTRL = false;
+  *PACE_CHARGE_CTRL = true;
+  Final_Simulink_Model_assignme_B.VENT_GND_CTRL = true;
+  *PACE_GND_CTRL = true;
+  tmp_0 = rt_roundd_snf(60000.0 / (real_T)Final_Simulink_Model_assignme_B.rate);
+  if (tmp_0 < 256.0) {
+    tmp = (uint8_T)tmp_0;
+  } else {
+    tmp = MAX_uint8_T;
+  }
+
+  qY = (uint32_T)tmp - /*MW:OvSatOk*/
+    Final_Simulink_Model_assignme_B.VENT_PULSE_WIDTH;
+  if (qY > tmp) {
+    qY = 0U;
+  }
+
+  if ((uint32_T)((int32_T)Final_Simulink_Model_assignm_DW.temporalCounter_i1 *
+                 10) >= qY) {
+    Final_Simulink_Model_assignm_DW.is_c7_Final_Simulink_Model_assi =
+      Final_Simulink_M_IN_Pacing_VOOR;
+    Final_Simulink_Model_assignm_DW.temporalCounter_i1 = 0U;
+    *PACE_CHARGE_CTRL = false;
+    *PACE_GND_CTRL = true;
+    Final_Simulink_Model_assignme_B.VENT_GND_CTRL = false;
+    Final_Simulink_Model_assignme_B.VENT_PACE_CTRL = true;
+  } else if (Final_Simulink_Model_assignme_B.mode != 6) {
+    Final_Simulink_Model_assignm_DW.is_c7_Final_Simulink_Model_assi =
+      Final_Simulink_Model_as_IN_MAIN;
+    Final_Simulink_Model_assignme_B.VENT_GND_CTRL = false;
+    Final_Simulink_Model_assignme_B.Z_ATR_CTRL = false;
+    Final_Simulink_Model_assignme_B.Z_VENT_CTRL = false;
+    Final_Simulink_Model_assignme_B.FRONTEND_CTRL = false;
+    *PACE_CHARGE_CTRL = false;
+    Final_Simulink_Model_assignme_B.ATR_PACE_CTRL = false;
+    *PACE_GND_CTRL = false;
+    Final_Simulink_Model_assignme_B.ATR_GND_CTRL = false;
+  }
+}
+
+/* Function for Chart: '<Root>/Chart1' */
 static void Final_Simulink_Model_assign_VVI(boolean_T *PACE_GND_CTRL, boolean_T *
   PACE_CHARGE_CTRL, const boolean_T *VENT_CMP_DETECT)
 {
@@ -505,6 +669,17 @@ static void Final_Simulink_Model_assign_VVI(boolean_T *PACE_GND_CTRL, boolean_T 
       Final_Simulink_Model_assignme_B.VENT_Amplitude_a;
     *PACE_CHARGE_CTRL = false;
     *PACE_GND_CTRL = true;
+  } else if (Final_Simulink_Model_assignme_B.mode != 4) {
+    Final_Simulink_Model_assignm_DW.is_c7_Final_Simulink_Model_assi =
+      Final_Simulink_Model_as_IN_MAIN;
+    Final_Simulink_Model_assignme_B.VENT_GND_CTRL = false;
+    Final_Simulink_Model_assignme_B.Z_ATR_CTRL = false;
+    Final_Simulink_Model_assignme_B.Z_VENT_CTRL = false;
+    Final_Simulink_Model_assignme_B.FRONTEND_CTRL = false;
+    *PACE_CHARGE_CTRL = false;
+    Final_Simulink_Model_assignme_B.ATR_PACE_CTRL = false;
+    *PACE_GND_CTRL = false;
+    Final_Simulink_Model_assignme_B.ATR_GND_CTRL = false;
   }
 }
 
@@ -566,30 +741,17 @@ static void Final_Simulink_Model_assig_VVIR(boolean_T *PACE_GND_CTRL, boolean_T 
       Final_Simulink_Model_assignme_B.VENT_Amplitude_a;
     *PACE_CHARGE_CTRL = false;
     *PACE_GND_CTRL = true;
-  }
-}
-
-/* Function for Chart: '<Root>/Chart1' */
-static void Final_Simulink__VVIR_REFRACTORY(boolean_T *PACE_GND_CTRL, boolean_T *
-  PACE_CHARGE_CTRL)
-{
-  Final_Simulink_Model_assignme_B.FRONTEND_CTRL = false;
-  Final_Simulink_Model_assignme_B.VENT_GND_CTRL = true;
-  *PACE_CHARGE_CTRL = false;
-  *PACE_GND_CTRL = true;
-  if ((uint32_T)((int32_T)Final_Simulink_Model_assignm_DW.temporalCounter_i1 *
-                 10) >= Final_Simulink_Model_assignme_B.VRP_o) {
+  } else if (Final_Simulink_Model_assignme_B.mode != 8) {
     Final_Simulink_Model_assignm_DW.is_c7_Final_Simulink_Model_assi =
-      Final_Simulink_Model_as_IN_VVIR;
-    Final_Simulink_Model_assignm_DW.temporalCounter_i1 = 0U;
-    Final_Simulink_Model_assignme_B.FRONTEND_CTRL = true;
-    Final_Simulink_Model_assignme_B.VENT_PACE_CTRL = false;
-    *PACE_CHARGE_CTRL = true;
-    *PACE_GND_CTRL = true;
-    Final_Simulink_Model_assignme_B.PACING_REF_PWM = 20.0F *
-      Final_Simulink_Model_assignme_B.VENT_Amplitude_a;
-    Final_Simulink_Model_assignme_B.VENT_CMP_REF_PWM = 20.0F *
-      Final_Simulink_Model_assignme_B.VENTSENSITIVITY_Amplitude_l;
+      Final_Simulink_Model_as_IN_MAIN;
+    Final_Simulink_Model_assignme_B.VENT_GND_CTRL = false;
+    Final_Simulink_Model_assignme_B.Z_ATR_CTRL = false;
+    Final_Simulink_Model_assignme_B.Z_VENT_CTRL = false;
+    Final_Simulink_Model_assignme_B.FRONTEND_CTRL = false;
+    *PACE_CHARGE_CTRL = false;
+    Final_Simulink_Model_assignme_B.ATR_PACE_CTRL = false;
+    *PACE_GND_CTRL = false;
+    Final_Simulink_Model_assignme_B.ATR_GND_CTRL = false;
   }
 }
 
@@ -1415,9 +1577,23 @@ void Final_Simulink_Model_assignment_2_step1(void) /* Sample time: [0.01s, 0.0s]
       break;
 
      case Final_Simuli_IN_AAIR_REFRACTORY:
-      Final_Simulink__AAIR_REFRACTORY
-        (&Final_Simulink_Model_assignme_B.PACE_GND_CTRL,
-         &Final_Simulink_Model_assignme_B.PACE_CHARGE_CTRL);
+      Final_Simulink_Model_assignme_B.FRONTEND_CTRL = false;
+      Final_Simulink_Model_assignme_B.ATR_PACE_CTRL = false;
+      Final_Simulink_Model_assignme_B.ATR_GND_CTRL = true;
+      Final_Simulink_Model_assignme_B.PACE_CHARGE_CTRL = false;
+      Final_Simulink_Model_assignme_B.PACE_GND_CTRL = true;
+      if ((uint32_T)((int32_T)Final_Simulink_Model_assignm_DW.temporalCounter_i1
+                     * 10) >= Final_Simulink_Model_assignme_B.ARP_l) {
+        Final_Simulink_Model_assignm_DW.is_c7_Final_Simulink_Model_assi =
+          Final_Simulink_Model_as_IN_AAIR;
+        Final_Simulink_Model_assignm_DW.temporalCounter_i1 = 0U;
+        Final_Simulink_Model_assignme_B.FRONTEND_CTRL = true;
+        Final_Simulink_Model_assignme_B.PACE_CHARGE_CTRL = true;
+        Final_Simulink_Model_assignme_B.PACING_REF_PWM = 20.0F *
+          Final_Simulink_Model_assignme_B.ATR_Amplitude_m;
+        Final_Simulink_Model_assignme_B.ATR_CMP_REF_PWM = 20.0F *
+          Final_Simulink_Model_assignme_B.ATRSENSITIVITY_Amplitude_p;
+      }
       break;
 
      case Final_Simulin_IN_AAI_REFRACTORY:
@@ -1427,71 +1603,15 @@ void Final_Simulink_Model_assignment_2_step1(void) /* Sample time: [0.01s, 0.0s]
       break;
 
      case Final_Simulink_Model_ass_IN_AOO:
-      Final_Simulink_Model_assignme_B.ATR_PACE_CTRL = false;
-      Final_Simulink_Model_assignme_B.PACE_CHARGE_CTRL = true;
-      Final_Simulink_Model_assignme_B.ATR_GND_CTRL = true;
-      Final_Simulink_Model_assignme_B.PACE_GND_CTRL = true;
-      Final_Simulink_Model_assignme_B.rtb_FXOS87006AxesSensor_idx_0 =
-        rt_roundd_snf(60000.0 / (real_T)Final_Simulink_Model_assignme_B.LRL);
-      if (Final_Simulink_Model_assignme_B.rtb_FXOS87006AxesSensor_idx_0 < 256.0)
-      {
-        Final_Simulink_Model_assignme_B.status = (uint8_T)
-          Final_Simulink_Model_assignme_B.rtb_FXOS87006AxesSensor_idx_0;
-      } else {
-        Final_Simulink_Model_assignme_B.status = MAX_uint8_T;
-      }
-
-      Final_Simulink_Model_assignme_B.qY = (uint32_T)
-        Final_Simulink_Model_assignme_B.status - /*MW:OvSatOk*/
-        Final_Simulink_Model_assignme_B.ATR_PULSE_WIDTH;
-      if (Final_Simulink_Model_assignme_B.qY >
-          Final_Simulink_Model_assignme_B.status) {
-        Final_Simulink_Model_assignme_B.qY = 0U;
-      }
-
-      if ((uint32_T)((int32_T)Final_Simulink_Model_assignm_DW.temporalCounter_i1
-                     * 10) >= Final_Simulink_Model_assignme_B.qY) {
-        Final_Simulink_Model_assignm_DW.is_c7_Final_Simulink_Model_assi =
-          Final_Simulink_Mo_IN_Pacing_AOO;
-        Final_Simulink_Model_assignm_DW.temporalCounter_i1 = 0U;
-        Final_Simulink_Model_assignme_B.PACE_CHARGE_CTRL = false;
-        Final_Simulink_Model_assignme_B.ATR_PACE_CTRL = true;
-        Final_Simulink_Model_assignme_B.ATR_GND_CTRL = false;
-      }
+      Final_Simulink_Model_assign_AOO
+        (&Final_Simulink_Model_assignme_B.PACE_GND_CTRL,
+         &Final_Simulink_Model_assignme_B.PACE_CHARGE_CTRL);
       break;
 
      case Final_Simulink_Model_as_IN_AOOR:
-      Final_Simulink_Model_assignme_B.ATR_PACE_CTRL = false;
-      Final_Simulink_Model_assignme_B.PACE_CHARGE_CTRL = true;
-      Final_Simulink_Model_assignme_B.ATR_GND_CTRL = true;
-      Final_Simulink_Model_assignme_B.PACE_GND_CTRL = true;
-      Final_Simulink_Model_assignme_B.rtb_FXOS87006AxesSensor_idx_0 =
-        rt_roundd_snf(60000.0 / (real_T)Final_Simulink_Model_assignme_B.rate);
-      if (Final_Simulink_Model_assignme_B.rtb_FXOS87006AxesSensor_idx_0 < 256.0)
-      {
-        Final_Simulink_Model_assignme_B.status = (uint8_T)
-          Final_Simulink_Model_assignme_B.rtb_FXOS87006AxesSensor_idx_0;
-      } else {
-        Final_Simulink_Model_assignme_B.status = MAX_uint8_T;
-      }
-
-      Final_Simulink_Model_assignme_B.qY = (uint32_T)
-        Final_Simulink_Model_assignme_B.status - /*MW:OvSatOk*/
-        Final_Simulink_Model_assignme_B.ATR_PULSE_WIDTH;
-      if (Final_Simulink_Model_assignme_B.qY >
-          Final_Simulink_Model_assignme_B.status) {
-        Final_Simulink_Model_assignme_B.qY = 0U;
-      }
-
-      if ((uint32_T)((int32_T)Final_Simulink_Model_assignm_DW.temporalCounter_i1
-                     * 10) >= Final_Simulink_Model_assignme_B.qY) {
-        Final_Simulink_Model_assignm_DW.is_c7_Final_Simulink_Model_assi =
-          Final_Simulink_M_IN_Pacing_AOOR;
-        Final_Simulink_Model_assignm_DW.temporalCounter_i1 = 0U;
-        Final_Simulink_Model_assignme_B.PACE_CHARGE_CTRL = false;
-        Final_Simulink_Model_assignme_B.ATR_PACE_CTRL = true;
-        Final_Simulink_Model_assignme_B.ATR_GND_CTRL = false;
-      }
+      Final_Simulink_Model_assig_AOOR
+        (&Final_Simulink_Model_assignme_B.PACE_GND_CTRL,
+         &Final_Simulink_Model_assignme_B.PACE_CHARGE_CTRL);
       break;
 
      case Final_Simulink_Model_as_IN_MAIN:
@@ -1641,71 +1761,15 @@ void Final_Simulink_Model_assignment_2_step1(void) /* Sample time: [0.01s, 0.0s]
       break;
 
      case Final_Simulink_Model_ass_IN_VOO:
-      Final_Simulink_Model_assignme_B.VENT_PACE_CTRL = false;
-      Final_Simulink_Model_assignme_B.PACE_CHARGE_CTRL = true;
-      Final_Simulink_Model_assignme_B.VENT_GND_CTRL = true;
-      Final_Simulink_Model_assignme_B.PACE_GND_CTRL = true;
-      Final_Simulink_Model_assignme_B.rtb_FXOS87006AxesSensor_idx_0 =
-        rt_roundd_snf(60000.0 / (real_T)Final_Simulink_Model_assignme_B.LRL);
-      if (Final_Simulink_Model_assignme_B.rtb_FXOS87006AxesSensor_idx_0 < 256.0)
-      {
-        Final_Simulink_Model_assignme_B.status = (uint8_T)
-          Final_Simulink_Model_assignme_B.rtb_FXOS87006AxesSensor_idx_0;
-      } else {
-        Final_Simulink_Model_assignme_B.status = MAX_uint8_T;
-      }
-
-      Final_Simulink_Model_assignme_B.qY = (uint32_T)
-        Final_Simulink_Model_assignme_B.status - /*MW:OvSatOk*/
-        Final_Simulink_Model_assignme_B.VENT_PULSE_WIDTH;
-      if (Final_Simulink_Model_assignme_B.qY >
-          Final_Simulink_Model_assignme_B.status) {
-        Final_Simulink_Model_assignme_B.qY = 0U;
-      }
-
-      if ((uint32_T)((int32_T)Final_Simulink_Model_assignm_DW.temporalCounter_i1
-                     * 10) >= Final_Simulink_Model_assignme_B.qY) {
-        Final_Simulink_Model_assignm_DW.is_c7_Final_Simulink_Model_assi =
-          Final_Simulink_Mo_IN_Pacing_VOO;
-        Final_Simulink_Model_assignm_DW.temporalCounter_i1 = 0U;
-        Final_Simulink_Model_assignme_B.PACE_CHARGE_CTRL = false;
-        Final_Simulink_Model_assignme_B.VENT_GND_CTRL = false;
-        Final_Simulink_Model_assignme_B.VENT_PACE_CTRL = true;
-      }
+      Final_Simulink_Model_assign_VOO
+        (&Final_Simulink_Model_assignme_B.PACE_GND_CTRL,
+         &Final_Simulink_Model_assignme_B.PACE_CHARGE_CTRL);
       break;
 
      case Final_Simulink_Model_as_IN_VOOR:
-      Final_Simulink_Model_assignme_B.VENT_PACE_CTRL = false;
-      Final_Simulink_Model_assignme_B.PACE_CHARGE_CTRL = true;
-      Final_Simulink_Model_assignme_B.VENT_GND_CTRL = true;
-      Final_Simulink_Model_assignme_B.PACE_GND_CTRL = true;
-      Final_Simulink_Model_assignme_B.rtb_FXOS87006AxesSensor_idx_0 =
-        rt_roundd_snf(60000.0 / (real_T)Final_Simulink_Model_assignme_B.rate);
-      if (Final_Simulink_Model_assignme_B.rtb_FXOS87006AxesSensor_idx_0 < 256.0)
-      {
-        Final_Simulink_Model_assignme_B.status = (uint8_T)
-          Final_Simulink_Model_assignme_B.rtb_FXOS87006AxesSensor_idx_0;
-      } else {
-        Final_Simulink_Model_assignme_B.status = MAX_uint8_T;
-      }
-
-      Final_Simulink_Model_assignme_B.qY = (uint32_T)
-        Final_Simulink_Model_assignme_B.status - /*MW:OvSatOk*/
-        Final_Simulink_Model_assignme_B.VENT_PULSE_WIDTH;
-      if (Final_Simulink_Model_assignme_B.qY >
-          Final_Simulink_Model_assignme_B.status) {
-        Final_Simulink_Model_assignme_B.qY = 0U;
-      }
-
-      if ((uint32_T)((int32_T)Final_Simulink_Model_assignm_DW.temporalCounter_i1
-                     * 10) >= Final_Simulink_Model_assignme_B.qY) {
-        Final_Simulink_Model_assignm_DW.is_c7_Final_Simulink_Model_assi =
-          Final_Simulink_M_IN_Pacing_VOOR;
-        Final_Simulink_Model_assignm_DW.temporalCounter_i1 = 0U;
-        Final_Simulink_Model_assignme_B.PACE_CHARGE_CTRL = false;
-        Final_Simulink_Model_assignme_B.VENT_GND_CTRL = false;
-        Final_Simulink_Model_assignme_B.VENT_PACE_CTRL = true;
-      }
+      Final_Simulink_Model_assig_VOOR
+        (&Final_Simulink_Model_assignme_B.PACE_GND_CTRL,
+         &Final_Simulink_Model_assignme_B.PACE_CHARGE_CTRL);
       break;
 
      case Final_Simulink_Model_ass_IN_VVI:
@@ -1723,16 +1787,44 @@ void Final_Simulink_Model_assignment_2_step1(void) /* Sample time: [0.01s, 0.0s]
       break;
 
      case Final_Simuli_IN_VVIR_REFRACTORY:
-      Final_Simulink__VVIR_REFRACTORY
-        (&Final_Simulink_Model_assignme_B.PACE_GND_CTRL,
-         &Final_Simulink_Model_assignme_B.PACE_CHARGE_CTRL);
+      Final_Simulink_Model_assignme_B.FRONTEND_CTRL = false;
+      Final_Simulink_Model_assignme_B.VENT_GND_CTRL = true;
+      Final_Simulink_Model_assignme_B.PACE_CHARGE_CTRL = false;
+      Final_Simulink_Model_assignme_B.PACE_GND_CTRL = true;
+      if ((uint32_T)((int32_T)Final_Simulink_Model_assignm_DW.temporalCounter_i1
+                     * 10) >= Final_Simulink_Model_assignme_B.VRP_o) {
+        Final_Simulink_Model_assignm_DW.is_c7_Final_Simulink_Model_assi =
+          Final_Simulink_Model_as_IN_VVIR;
+        Final_Simulink_Model_assignm_DW.temporalCounter_i1 = 0U;
+        Final_Simulink_Model_assignme_B.FRONTEND_CTRL = true;
+        Final_Simulink_Model_assignme_B.VENT_PACE_CTRL = false;
+        Final_Simulink_Model_assignme_B.PACE_CHARGE_CTRL = true;
+        Final_Simulink_Model_assignme_B.PACING_REF_PWM = 20.0F *
+          Final_Simulink_Model_assignme_B.VENT_Amplitude_a;
+        Final_Simulink_Model_assignme_B.VENT_CMP_REF_PWM = 20.0F *
+          Final_Simulink_Model_assignme_B.VENTSENSITIVITY_Amplitude_l;
+      }
       break;
 
      default:
       /* case IN_VVI_REFRACTORY: */
-      Final_Simulink_M_VVI_REFRACTORY
-        (&Final_Simulink_Model_assignme_B.PACE_GND_CTRL,
-         &Final_Simulink_Model_assignme_B.PACE_CHARGE_CTRL);
+      Final_Simulink_Model_assignme_B.FRONTEND_CTRL = false;
+      Final_Simulink_Model_assignme_B.VENT_GND_CTRL = true;
+      Final_Simulink_Model_assignme_B.PACE_CHARGE_CTRL = false;
+      Final_Simulink_Model_assignme_B.PACE_GND_CTRL = true;
+      if ((uint32_T)((int32_T)Final_Simulink_Model_assignm_DW.temporalCounter_i1
+                     * 10) >= Final_Simulink_Model_assignme_B.VRP_o) {
+        Final_Simulink_Model_assignm_DW.is_c7_Final_Simulink_Model_assi =
+          Final_Simulink_Model_ass_IN_VVI;
+        Final_Simulink_Model_assignm_DW.temporalCounter_i1 = 0U;
+        Final_Simulink_Model_assignme_B.FRONTEND_CTRL = true;
+        Final_Simulink_Model_assignme_B.VENT_PACE_CTRL = false;
+        Final_Simulink_Model_assignme_B.PACE_CHARGE_CTRL = true;
+        Final_Simulink_Model_assignme_B.PACING_REF_PWM = 20.0F *
+          Final_Simulink_Model_assignme_B.VENT_Amplitude_a;
+        Final_Simulink_Model_assignme_B.VENT_CMP_REF_PWM = 20.0F *
+          Final_Simulink_Model_assignme_B.VENTSENSITIVITY_Amplitude_l;
+      }
       break;
     }
   }

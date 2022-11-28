@@ -7,7 +7,7 @@ import json
 import sys
 
 
-COMPORT = 'COM4' #change me to the correct COM port
+COMPORT = 'COM3' #change me to the correct COM port
 Start = b'\x16'
 SYNC = b'\x22'
 Fn_set = b'\x55'
@@ -74,6 +74,8 @@ with open(userFilepath+patientDataFile, "r") as iFile:
         at = struct.pack("f",6.0) #High Activity
     elif ((patientData["value13"]) == "V-High"):
         at = struct.pack("f",7.0) #Very High Activity
+    else:
+        at = struct.pack("f",1.0) #Very Low Activity
 
     rt = struct.pack("B",int(patientData["value14"]))
     res = struct.pack("B",int(patientData["value15"]))
@@ -121,8 +123,8 @@ print ("_____________")
 with serial.Serial(COMPORT, 115200) as pacemaker:
     pacemaker.write(Signal_set)
 
-print("From the board:")
-"""with serial.Serial(COMPORT, 115200) as pacemaker:
+"""print("From the board:")
+with serial.Serial(COMPORT, 115200) as pacemaker:
     
     pacemaker.write(Signal_echo)
     data = pacemaker.read(33)
