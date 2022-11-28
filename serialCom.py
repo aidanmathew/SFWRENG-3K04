@@ -61,9 +61,7 @@ with open(userFilepath+patientDataFile, "r") as iFile:
     hys = struct.pack("B",int(patientData["value11"]))
     rs = struct.pack("B",int(patientData["value12"]))
 
-    if ((patientData["value13"]) == "V-Low"):
-        at = struct.pack("f",1.0) #Very Low activity
-    elif (((patientData["value13"]) == "Low")):
+    if (((patientData["value13"]) == "Low")):
         at = struct.pack("f",2.0) #Low Activity
     elif ((patientData["value13"]) == "Med-Low"):
         at = struct.pack("f",3.0) #Med-Low Activity
@@ -75,6 +73,8 @@ with open(userFilepath+patientDataFile, "r") as iFile:
         at = struct.pack("f",6.0) #High Activity
     elif ((patientData["value13"]) == "V-High"):
         at = struct.pack("f",7.0) #Very High Activity
+    else:
+        at = struct.pack("f",1.0) #Very Low activity
 
     rt = struct.pack("B",int(patientData["value14"]))
     res = struct.pack("B",int(patientData["value15"]))
