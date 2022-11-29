@@ -125,25 +125,28 @@ with serial.Serial(COMPORT, 115200) as pacemaker:
 
 print("From the board:")
 with serial.Serial(COMPORT, 115200) as pacemaker:
-    
-    pacemaker.write(Signal_echo)
-
 #this block returns the data from Pin A0 and Pin A1 - the board need to be flashed with the corresponding simulink
 #file for this block to be excetued.
-    data = pacemaker.read(16)
-    pin1 = struct.unpack("d",data[0:8])[0]
-    pin2 = struct.unpack("d",data[8:16])[0]
-    print("Pin 1", pin1)
-    print("Pin 2",pin2)
+    for i in range(10):
+        pacemaker.write(Signal_echo)
 
-    with open('data.txt', 'w') as f:
-        f.write(str(pin1) + "\n")
-        f.write(str(pin2))
+        data = pacemaker.read(16)
+        pin1 = struct.unpack("d",data[0:8])[0]
+        pin2 = struct.unpack("d",data[8:16])[0]
+        print("Pin 1", pin1)
+        print("Pin 2",pin2)
+
+    #this block writes the data from Pin A0 and Pin A1 to a txt file, which will be read by the e-gram in dcmFinal.py
+        with open('data.txt', 'a') as f:
+            f.write(str(pin1) + "\n")
+            f.write(str(pin2) + "\n")
 
 
 #this block reads back the data that is being send from the DCM - Uncommet this block to see it function
 #The board needs to be flash with the corresponding simulink for this block to execute
-    """data = pacemaker.read(33)
+    """
+    pacemaker.write(Signal_echo)
+    data = pacemaker.read(33)
 
     mode2 = data[0]
     lrl2 = data[1]
@@ -161,8 +164,6 @@ with serial.Serial(COMPORT, 115200) as pacemaker:
     res2 = data[30]
     rt2 = data[31]
     rct2 = data[32]
-    #pin0 = struct.unpack("f",data[33:41])[0]
-    #pin1 = struct.unpack("f",data[41:48])[0]
 
 
 print("Mode = ", mode2)
