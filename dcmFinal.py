@@ -351,7 +351,7 @@ class guiDCM:
 
             # This defines the tab that contains the hardware status information
             try:
-                frdm_port = serial.Serial('COM4')
+                frdm_port = serial.Serial('COM3')
                 print(frdm_port)
                 connectionStatus = "Connected"
                 portNum = frdm_port.port
