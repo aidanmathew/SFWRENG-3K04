@@ -19,6 +19,7 @@ import numpy as np
 from subprocess import call
 
 class guiDCM:
+
     # defining the directory for the image logo and respective directory
     imageFilepath = "./images"
     mainImage = "/heartbeat.png"
@@ -255,10 +256,10 @@ class guiDCM:
         else:
             messagebox.showerror("Login Unsuccessful", "The username or the password is not correct.")
 
-    xar = [0, 0]
-    yar = [0, 0]
-    xar1 = [0, 0]
-    yar1 = [0, 0]
+    xar = [0,0]
+    yar = [0,0]
+    xar1 = [0,0]
+    yar1 = [0,0]
 
     pulseplot = False
 
@@ -287,13 +288,32 @@ class guiDCM:
     # if the pulseplot is true
     def refresh(self):
         if guiDCM.pulseplot == True:
+            # datafile = open("data.txt", "r")
+            # pin1txt=[]
+            # pin2txt=[]
+            # count = 0
+            # for line in datafile:
+            #     if count%2 == 0:
+            #         pin1txt.append(float(line[:-2]))
+            #     else:
+            #         pin2txt.append(float(line[:-2]))
+            #     count+=1
+            #     if count>=200:
+            #         break
+
+            # print(pin1txt)
+            # print(pin2txt)
+
             guiDCM.xar = np.append(guiDCM.xar, guiDCM.xar[-1]+0.1)
+            # np.sin(guiDCM.xar[-1])
             guiDCM.yar = np.append(guiDCM.yar, np.sin(guiDCM.xar[-1]))
             guiDCM.xar1 = np.append(guiDCM.xar1, guiDCM.xar1[-1]+0.1)
             guiDCM.yar1 = np.append(guiDCM.yar1, np.cos(guiDCM.xar1[-1]*2.5)*3)
             self.ax.set_xlim(guiDCM.xar[-1]-10, guiDCM.xar[-1])
             self.line.set_data(guiDCM.xar,guiDCM.yar)
-            self.line2.set_data(guiDCM.xar1,guiDCM.yar1)       
+            self.line2.set_data(guiDCM.xar1,guiDCM.yar1)      
+            print(self.line) 
+            print(self.line2)
             self.graph.draw()
             self.root.after(10, self.refresh)
 
