@@ -127,7 +127,18 @@ print("From the board:")
 with serial.Serial(COMPORT, 115200) as pacemaker:
     
     pacemaker.write(Signal_echo)
-    data = pacemaker.read(33)
+
+#this block returns the data from Pin A0 and Pin A1 - the board need to be flashed with the corresponding simulink
+#file for this block to be excetued.
+    data = pacemaker.read(16)
+    pin1 = struct.unpack("d",data[0:8])[0]
+    pin2 = struct.unpack("d",data[8:16])[0]
+    print("Pin 1", pin1)
+    print("Pin 2",pin2)
+
+#this block reads back the data that is being send from the DCM - Uncommet this block to see it function
+#The board needs to be flash with the corresponding simulink for this block to execute
+    """data = pacemaker.read(33)
 
     mode2 = data[0]
     lrl2 = data[1]
@@ -164,7 +175,7 @@ print("MSR = ", msr2)
 print("Activty Threshold = ", at2)
 print("Reaction Time = ", rt2)
 print("Response Time = ", res2)
-print("Recovery Time = ", rct2)
+print("Recovery Time = ", rct2)"""
 
 
 
