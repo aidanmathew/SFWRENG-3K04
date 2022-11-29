@@ -563,6 +563,7 @@ class guiDCM:
             self.upperRateLim.set("0")
 
         if (chosenMode.get() == "AOO"):
+            messagebox.showinfo("Input Deletion","AOO does not require all the inputed parameters. Non requried data has been set to 0" )
             self.maxSensorRate.set("0")
             self.ventricalAmp.set("0")
             self.ventricalPulesWidth.set("0")
@@ -581,6 +582,7 @@ class guiDCM:
             self.ventricalSens.set("0")
         
         if (chosenMode.get() == "VOO"):
+            messagebox.showinfo("Input Deletion","VOO does not require all the inputed parameters. Non requried data has been set to 0" )
             self.maxSensorRate.set("0")
             self.atrialAmp.set("0")
             self.atrialPulesWidth.set("0")
@@ -599,6 +601,7 @@ class guiDCM:
             self.ventricalSens.set("0")
 
         if (chosenMode.get() == "AAI"):
+            messagebox.showinfo("Input Deletion","AAI does not require all the inputed parameters. Non requried data has been set to 0" )
             self.maxSensorRate.set("0")
             self.ventricalAmp.set("0")
             self.ventricalPulesWidth.set("0")
@@ -611,6 +614,7 @@ class guiDCM:
             self.ventricalSens.set("0")
         
         if (chosenMode.get() == "VVI"):
+            messagebox.showinfo("Input Deletion","VVI does not require all the inputed parameters. Non requried data has been set to 0" )
             self.maxSensorRate.set("0")
             self.atrialAmp.set("0")
             self.atrialPulesWidth.set("0")
@@ -624,6 +628,7 @@ class guiDCM:
             self.ventricalSens.set("0")
 
         if (chosenMode.get() == "AOOR"):
+            messagebox.showinfo("Input Deletion","AOOR does not require all the inputed parameters. Non requried data has been set to 0" )
             self.ventricalAmp.set("0")
             self.ventricalPulesWidth.set("0")
             self.vrp.set("0")
@@ -637,6 +642,7 @@ class guiDCM:
             self.ventricalSens.set("0")
 
         if (chosenMode.get() == "VOOR"):
+            messagebox.showinfo("Input Deletion","VOOR does not require all the inputed parameters. Non requried data has been set to 0" )
             self.maxSensorRate.set("0")
             self.atrialAmp.set("0")
             self.atrialPulesWidth.set("0")
@@ -651,6 +657,7 @@ class guiDCM:
             self.ventricalSens.set("0")
 
         if (chosenMode.get() == "AAIR"):
+            messagebox.showinfo("Input Deletion","AAIR does not require all the inputed parameters. Non requried data has been set to 0" )
             self.ventricalAmp.set("0")
             self.ventricalPulesWidth.set("0")
             self.vrp.set("0")

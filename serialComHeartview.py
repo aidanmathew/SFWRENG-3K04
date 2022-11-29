@@ -7,7 +7,7 @@ import json
 import sys
 
 
-COMPORT = 'COM4' #change me to the correct COM port
+COMPORT = 'COM3' #change me to the correct COM port
 Start = b'\x16'
 SYNC = b'\x22'
 Fn_set = b'\x55'
@@ -116,7 +116,7 @@ Signal_set = Start+Fn_set+mode+lrl+url+vamp+aamp+vpw+apw+vsen+asen+arp+vrp+msr+a
 Signal_echo = Start+SYNC+mode+lrl+url+vamp+aamp+vpw+apw+vsen+asen+arp+vrp+msr+at+res+rt+rct
 
 print ("_____________")
-print (Signal_set[3])
+print (Signal_set)
 print ("_____________")
 print (Signal_echo)
 print ("_____________")
@@ -145,6 +145,8 @@ with serial.Serial(COMPORT, 115200) as pacemaker:
     res2 = data[30]
     rt2 = data[31]
     rct2 = data[32]
+    #pin0 = struct.unpack("f",data[33:41])[0]
+    #pin1 = struct.unpack("f",data[41:48])[0]
 
 
 print("Mode = ", mode2)
