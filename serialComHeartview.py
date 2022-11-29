@@ -136,6 +136,11 @@ with serial.Serial(COMPORT, 115200) as pacemaker:
     print("Pin 1", pin1)
     print("Pin 2",pin2)
 
+    with open('data.txt', 'w') as f:
+        f.write(str(pin1) + "\n")
+        f.write(str(pin2))
+
+
 #this block reads back the data that is being send from the DCM - Uncommet this block to see it function
 #The board needs to be flash with the corresponding simulink for this block to execute
     """data = pacemaker.read(33)
